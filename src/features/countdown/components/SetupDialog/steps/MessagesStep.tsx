@@ -49,9 +49,7 @@ export function MessagesStep() {
         autoFocus
       />
 
-      <label htmlFor={PARTNER_INPUT_ID}>
-        {t.setup.messages.partnerLabel}
-      </label>
+      <label htmlFor={PARTNER_INPUT_ID}>{t.setup.messages.partnerLabel}</label>
       <TextInput
         id={PARTNER_INPUT_ID}
         maxLength={NICKNAME_MAX_LENGTH}

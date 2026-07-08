@@ -4,7 +4,10 @@ import {
   BUTTON_VARIANT,
   Textarea,
 } from '../../../../../shared/components/elements'
-import { MESSAGE_MAX_LENGTH, PARTNER_MESSAGE_INPUT_ID } from '../../../constants'
+import {
+  MESSAGE_MAX_LENGTH,
+  PARTNER_MESSAGE_INPUT_ID,
+} from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
 export function SendMessageStep() {
@@ -59,7 +62,9 @@ export function SendMessageStep() {
           variant={BUTTON_VARIANT.SECONDARY}
           onClick={copyCurrentUrl}
         >
-          {messageCopied ? t.setup.sendMessage.copied : t.setup.sendMessage.copy}
+          {messageCopied
+            ? t.setup.sendMessage.copied
+            : t.setup.sendMessage.copy}
         </Button>
         <Button type="submit" disabled={isSubmitting}>
           {t.setup.sendMessage.submit}

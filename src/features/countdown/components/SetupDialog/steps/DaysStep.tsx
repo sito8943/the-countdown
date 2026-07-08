@@ -1,8 +1,5 @@
 import { t } from '../../../../../lang'
-import {
-  Button,
-  TextInput,
-} from '../../../../../shared/components/elements'
+import { Button, TextInput } from '../../../../../shared/components/elements'
 import { DAYS_INPUT_ID } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
