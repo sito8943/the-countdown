@@ -66,7 +66,7 @@ export function SendMessageStep() {
             ? t.setup.sendMessage.copied
             : t.setup.sendMessage.copy}
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" loading={isSubmitting}>
           {t.setup.sendMessage.submit}
         </Button>
       </div>

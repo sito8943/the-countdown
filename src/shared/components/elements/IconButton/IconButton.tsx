@@ -13,13 +13,22 @@ export function IconButton({
   label,
   variant = BUTTON_VARIANT.SECONDARY,
   className,
+  loading = false,
   ...rest
 }: IconButtonProps) {
   const classes = classNames('icon-button', className)
 
   return (
-    <Button variant={variant} className={classes} aria-label={label} {...rest}>
-      <Icon icon={icon} fixedWidth />
+    <Button
+      variant={variant}
+      className={classes}
+      aria-label={label}
+      loading={loading}
+      {...rest}
+    >
+      {/* While loading the Button renders its spinner; hide the icon so only
+          the spinner shows. */}
+      {loading ? null : <Icon icon={icon} fixedWidth />}
     </Button>
   )
 }

@@ -30,7 +30,7 @@ export function NicknameStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" loading={isSubmitting}>
         {t.setup.nickname.submit}
       </Button>
     </form>

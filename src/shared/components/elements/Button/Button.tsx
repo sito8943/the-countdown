@@ -11,9 +11,27 @@ export function Button({
   variant = BUTTON_VARIANT.PRIMARY,
   type = 'button',
   className,
+  loading = false,
+  disabled,
+  children,
   ...rest
 }: ButtonProps) {
-  const classes = classNames(BUTTON_VARIANT_CLASS[variant], className)
+  const classes = classNames(
+    BUTTON_VARIANT_CLASS[variant],
+    loading ? 'is-loading' : undefined,
+    className,
+  )
 
-  return <button type={type} className={classes} {...rest} />
+  return (
+    <button
+      type={type}
+      className={classes}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...rest}
+    >
+      {loading ? <span className="button-spinner" aria-hidden="true" /> : null}
+      {children}
+    </button>
+  )
 }

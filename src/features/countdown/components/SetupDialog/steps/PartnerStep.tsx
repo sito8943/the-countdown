@@ -30,7 +30,7 @@ export function PartnerStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" loading={isSubmitting}>
         {t.setup.partner.submit}
       </Button>
     </form>

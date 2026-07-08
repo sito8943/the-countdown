@@ -39,7 +39,7 @@ export function SyncStep() {
         >
           {t.setup.sync.createOwn}
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" loading={isSubmitting}>
           {t.setup.sync.submit}
         </Button>
       </div>
