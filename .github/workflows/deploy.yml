@@ -5,9 +5,9 @@ on:
     branches:
       - main
 
-# Allow one concurrent deploy; let an in-progress run finish.
+# Allow one concurrent Pages deploy; let an in-progress run finish.
 concurrency:
-  group: deploy
+  group: pages
   cancel-in-progress: false
 
 jobs:
