@@ -31,8 +31,8 @@ export function CountdownCard() {
       </div>
 
       <div className="countdown-readout">
-        <TimeScale />
         <p className="readout-caption">{t.readout.caption}</p>
+        <TimeScale />
       </div>
 
       <div className="progress-block">

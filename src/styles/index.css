@@ -4,6 +4,12 @@
   /* Keep the root at the browser default (16px) so rem = 16px and the
      4px-based spacing scale stays exact. Base text size lives on body. */
   font-size: 100%;
+  /* Safety net: an absolutely-positioned popup (e.g. a Tooltip near the right
+     edge) must never add horizontal page scroll before its JS clamp runs.
+     Set on the root (and body below) so it reaches the viewport. The app has
+     no position: sticky, so the scroll container this creates is harmless. The
+     edit FAB is position: fixed against the viewport and is not clipped. */
+  overflow-x: hidden;
   color: var(--color-text);
   background: var(--color-bg);
   font-synthesis: none;
@@ -20,6 +26,7 @@ body {
   margin: 0;
   min-width: var(--size-viewport-min);
   min-height: 100svh;
+  overflow-x: hidden; /* Pairs with :root; see the safety-net note above. */
   font: var(--font-size-md) / var(--line-height-base) var(--font-family-base);
   color: var(--color-text);
   background:

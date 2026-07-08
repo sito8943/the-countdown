@@ -2,7 +2,6 @@
   display: flex;
   max-width: 100%;
   min-width: 0;
-  min-height: var(--size-scale-min-height);
   align-items: end;
   gap: var(--space-scale-gap);
   overflow: visible;

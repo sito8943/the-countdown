@@ -80,7 +80,10 @@
   --border-width-focus: 3px;
 
   /* Sizes */
-  --size-viewport-min: 20rem;
+  /* Floor matches the hero title row's min-content width (~275px). A higher
+     floor (e.g. 20rem) forces the body wider than the viewport on ~280-319px
+     screens, adding horizontal scroll. */
+  --size-viewport-min: 17.5rem;
   --size-shell-max: 60rem;
   --size-dialog-max: 26.25rem;
   --size-intro-max: 35rem;

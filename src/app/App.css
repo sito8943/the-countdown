@@ -12,7 +12,7 @@
 
 @media (max-width: 720px) {
   .countdown-shell {
-    justify-content: flex-start;
+    justify-content: center;
     padding-top: var(--space-6);
   }
 }
