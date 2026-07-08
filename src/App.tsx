@@ -2,7 +2,6 @@ import { useConvex, useMutation, useQuery } from 'convex/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { api } from '../convex/_generated/api'
-import heroImg from './assets/hero.png'
 import './App.css'
 
 const PROFILE_STORAGE_KEY = 'the-countdown:profile'
@@ -12,7 +11,12 @@ const HOUR_IN_MS = 60 * 60 * 1000
 const MINUTE_IN_MS = 60 * 1000
 const SECOND_IN_MS = 1000
 
-type SetupStep = 'idle' | 'nickname' | 'partner' | 'sync' | 'days'
+const DEFAULT_EYEBROW = 'Cuba esta cerca'
+const DEFAULT_TITLE = 'Nuestro countdown'
+const DEFAULT_NOTE =
+  'Convex mantiene el mismo contador para los nicknames sincronizados.'
+
+type SetupStep = 'idle' | 'nickname' | 'partner' | 'sync' | 'days' | 'messages'
 
 type LocalProfile = {
   nickname: string
@@ -23,6 +27,9 @@ type Countdown = {
   initialDays: number
   placedAt: number
   ownerNickname: string
+  eyebrow?: string
+  title?: string
+  note?: string
   createdAt?: number
   updatedAt?: number
 }
@@ -120,6 +127,11 @@ function readCachedCountdownState(): CountdownState | null {
         initialDays: Math.max(0, Math.floor(countdown.initialDays)),
         placedAt: countdown.placedAt,
         ownerNickname: countdown.ownerNickname,
+        eyebrow:
+          typeof countdown.eyebrow === 'string' ? countdown.eyebrow : undefined,
+        title:
+          typeof countdown.title === 'string' ? countdown.title : undefined,
+        note: typeof countdown.note === 'string' ? countdown.note : undefined,
         createdAt:
           typeof countdown.createdAt === 'number'
             ? countdown.createdAt
@@ -237,6 +249,9 @@ function App() {
   const [nicknameInput, setNicknameInput] = useState('')
   const [partnerInput, setPartnerInput] = useState('')
   const [daysInput, setDaysInput] = useState('')
+  const [eyebrowInput, setEyebrowInput] = useState('')
+  const [titleInput, setTitleInput] = useState('')
+  const [noteInput, setNoteInput] = useState('')
   const [formError, setFormError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [syncCandidate, setSyncCandidate] = useState<CountdownState | null>(
@@ -253,6 +268,7 @@ function App() {
   const saveProfile = useMutation(api.countdowns.saveProfile)
   const createCountdown = useMutation(api.countdowns.createCountdown)
   const syncWithProfile = useMutation(api.countdowns.syncWithProfile)
+  const updateMessages = useMutation(api.countdowns.updateMessages)
 
   const matchingCachedState =
     cachedCountdownState?.countdown &&
@@ -271,6 +287,9 @@ function App() {
         : viewer || pendingCountdownState || matchingCachedState
   const activeProfile = activeState?.profile ?? null
   const countdown = activeState?.countdown ?? null
+  const displayEyebrow = countdown?.eyebrow ?? DEFAULT_EYEBROW
+  const displayTitle = countdown?.title ?? DEFAULT_TITLE
+  const displayNote = countdown?.note ?? DEFAULT_NOTE
   const remainingMs = useMemo(
     () => getRemainingMs(countdown, now),
     [countdown, now],
@@ -519,6 +538,51 @@ function App() {
     }
   }
 
+  function handleOpenMessages() {
+    if (!countdown) {
+      return
+    }
+
+    setFormError('')
+    setEyebrowInput(countdown.eyebrow ?? DEFAULT_EYEBROW)
+    setTitleInput(countdown.title ?? DEFAULT_TITLE)
+    setNoteInput(countdown.note ?? DEFAULT_NOTE)
+    setSetupStep('messages')
+  }
+
+  async function handleMessagesSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setFormError('')
+
+    if (!localProfile?.nickname) {
+      setSetupStep('nickname')
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+      const nextState = (await updateMessages({
+        nickname: localProfile.nickname,
+        eyebrow: eyebrowInput,
+        title: titleInput,
+        note: noteInput,
+      })) as CountdownState
+
+      setPendingCountdownState(nextState)
+      saveCountdownCache(nextState)
+      setCachedCountdownState(nextState)
+      setSetupStep('idle')
+    } catch (error) {
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : 'No se pudieron guardar los mensajes.',
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   function handleCreateOwnCountdown() {
     setSyncCandidate(null)
     setFormError('')
@@ -713,6 +777,84 @@ function App() {
       )
     }
 
+    if (setupStep === 'messages') {
+      return (
+        <form className="setup-form" onSubmit={handleMessagesSubmit}>
+          <div>
+            <p className="eyebrow">Personalizar</p>
+            <h2>Editar mensajes</h2>
+            <p>
+              Estos textos se comparten: los dos veran los mismos. Deja un campo
+              vacio para volver al texto por defecto.
+            </p>
+          </div>
+
+          <label htmlFor="message-eyebrow">Encabezado</label>
+          <input
+            id="message-eyebrow"
+            type="text"
+            maxLength={60}
+            placeholder={DEFAULT_EYEBROW}
+            value={eyebrowInput}
+            onChange={(event) => {
+              setEyebrowInput(event.target.value)
+              setFormError('')
+            }}
+            autoFocus
+          />
+
+          <label htmlFor="message-title">Titulo</label>
+          <input
+            id="message-title"
+            type="text"
+            maxLength={80}
+            placeholder={DEFAULT_TITLE}
+            value={titleInput}
+            onChange={(event) => {
+              setTitleInput(event.target.value)
+              setFormError('')
+            }}
+          />
+
+          <label htmlFor="message-note">Nota</label>
+          <textarea
+            id="message-note"
+            rows={3}
+            maxLength={240}
+            placeholder={DEFAULT_NOTE}
+            value={noteInput}
+            onChange={(event) => {
+              setNoteInput(event.target.value)
+              setFormError('')
+            }}
+          />
+
+          {formError ? <p className="field-error">{formError}</p> : null}
+
+          <div className="dialog-actions">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => {
+                setFormError('')
+                setSetupStep('idle')
+              }}
+              disabled={isSubmitting}
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="primary-action"
+              disabled={isSubmitting}
+            >
+              Guardar mensajes
+            </button>
+          </div>
+        </form>
+      )
+    }
+
     return null
   }
 
@@ -720,8 +862,8 @@ function App() {
     <main className="countdown-shell">
       <section className="countdown-hero" aria-labelledby="countdown-title">
         <div className="hero-copy">
-          <p className="eyebrow">Cuba esta cerca</p>
-          <h1 id="countdown-title">Nuestro countdown</h1>
+          <p className="eyebrow">{displayEyebrow}</p>
+          <h1 id="countdown-title">{displayTitle}</h1>
         </div>
       </section>
 
@@ -797,9 +939,15 @@ function App() {
           <div className="settings-summary">
             <p>
               Conteo creado por {countdown.ownerNickname} el{' '}
-              {formatPlacedDate(countdown.placedAt)}. Convex mantiene el mismo
-              contador para los nicknames sincronizados.
+              {formatPlacedDate(countdown.placedAt)}. {displayNote}
             </p>
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={handleOpenMessages}
+            >
+              Editar mensajes
+            </button>
           </div>
         ) : (
           <p className="loading-copy">
@@ -814,6 +962,11 @@ function App() {
         ref={dialogRef}
         className="setup-dialog"
         onCancel={(event) => {
+          if (setupStep === 'messages') {
+            setSetupStep('idle')
+            return
+          }
+
           if (setupStep !== 'idle') {
             event.preventDefault()
           }

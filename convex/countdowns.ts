@@ -171,6 +171,41 @@ export const createCountdown = mutation({
   },
 })
 
+function cleanMessage(value: string | undefined, maxLength: number) {
+  const cleanValue = (value ?? '').trim()
+
+  if (cleanValue.length > maxLength) {
+    throw new Error(`El texto no puede tener mas de ${maxLength} caracteres.`)
+  }
+
+  return cleanValue.length > 0 ? cleanValue : undefined
+}
+
+export const updateMessages = mutation({
+  args: {
+    nickname: v.string(),
+    eyebrow: v.optional(v.string()),
+    title: v.optional(v.string()),
+    note: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const profile = await getProfileByNickname(ctx.db, args.nickname)
+
+    if (!profile?.countdownId) {
+      throw new Error('No hay countdown para editar.')
+    }
+
+    await ctx.db.patch(profile.countdownId, {
+      eyebrow: cleanMessage(args.eyebrow, 60),
+      title: cleanMessage(args.title, 80),
+      note: cleanMessage(args.note, 240),
+      updatedAt: Date.now(),
+    })
+
+    return buildCountdownState(ctx, profile)
+  },
+})
+
 export const syncWithProfile = mutation({
   args: {
     nickname: v.string(),

@@ -287,7 +287,8 @@
   font-weight: 700;
 }
 
-.setup-form input {
+.setup-form input,
+.setup-form textarea {
   width: 100%;
   min-height: 48px;
   padding: 8px 12px;
@@ -298,6 +299,17 @@
   background: var(--input-bg);
   font: inherit;
   font-size: 20px;
+}
+
+.setup-form textarea {
+  min-height: 84px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.setup-form textarea:focus-visible {
+  outline: 3px solid var(--accent-border);
+  outline-offset: 2px;
 }
 
 .field-error {
