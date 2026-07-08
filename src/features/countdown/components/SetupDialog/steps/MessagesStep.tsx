@@ -4,15 +4,22 @@ import {
   BUTTON_VARIANT,
   TextInput,
 } from '../../../../../shared/components/elements'
+import { NICKNAME_MAX_LENGTH } from '../../../../../shared/constants'
 import {
   MESSAGE_EYEBROW_INPUT_ID,
   MESSAGE_MAX_LENGTH,
   MESSAGE_TITLE_INPUT_ID,
+  NICKNAME_INPUT_ID,
+  PARTNER_INPUT_ID,
 } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
 export function MessagesStep() {
   const {
+    nicknameInput,
+    onNicknameChange,
+    partnerInput,
+    onPartnerChange,
     eyebrowInput,
     onEyebrowChange,
     titleInput,
@@ -30,6 +37,29 @@ export function MessagesStep() {
         <h2>{t.setup.messages.title}</h2>
       </div>
 
+      <label htmlFor={NICKNAME_INPUT_ID}>
+        {t.setup.messages.nicknameLabel}
+      </label>
+      <TextInput
+        id={NICKNAME_INPUT_ID}
+        maxLength={NICKNAME_MAX_LENGTH}
+        placeholder={t.setup.messages.nicknameLabel}
+        value={nicknameInput}
+        onChange={(event) => onNicknameChange(event.target.value)}
+        autoFocus
+      />
+
+      <label htmlFor={PARTNER_INPUT_ID}>
+        {t.setup.messages.partnerLabel}
+      </label>
+      <TextInput
+        id={PARTNER_INPUT_ID}
+        maxLength={NICKNAME_MAX_LENGTH}
+        placeholder={t.setup.messages.partnerLabel}
+        value={partnerInput}
+        onChange={(event) => onPartnerChange(event.target.value)}
+      />
+
       <label htmlFor={MESSAGE_EYEBROW_INPUT_ID}>
         {t.setup.messages.eyebrowLabel}
       </label>
@@ -39,7 +69,6 @@ export function MessagesStep() {
         placeholder={t.defaults.eyebrow}
         value={eyebrowInput}
         onChange={(event) => onEyebrowChange(event.target.value)}
-        autoFocus
       />
 
       <label htmlFor={MESSAGE_TITLE_INPUT_ID}>

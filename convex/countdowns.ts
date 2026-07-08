@@ -204,6 +204,63 @@ export const updateMessages = mutation({
   },
 })
 
+// Renames the current profile and/or updates its partner pointer. Keeps the
+// same countdown link and migrates the sender's own message key on rename.
+export const updateProfile = mutation({
+  args: {
+    currentNickname: v.string(),
+    nickname: v.string(),
+    partnerNickname: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const cleanValue = assertNickname(args.nickname)
+    const cleanPartnerNickname = cleanOptionalNickname(args.partnerNickname)
+    assertDifferentNicknames(cleanValue, cleanPartnerNickname)
+
+    const profile = await getProfileByNickname(ctx.db, args.currentNickname)
+
+    if (!profile) {
+      throw new Error('No se encontro tu perfil.')
+    }
+
+    const newNormalized = normalizeNickname(cleanValue)
+    const nicknameChanged = newNormalized !== profile.normalizedNickname
+
+    if (nicknameChanged) {
+      const existing = await getProfileByNickname(ctx.db, cleanValue)
+
+      if (existing && existing._id !== profile._id) {
+        throw new Error('Ese nickname ya esta en uso.')
+      }
+    }
+
+    const now = Date.now()
+    await ctx.db.patch(profile._id, {
+      nickname: cleanValue,
+      normalizedNickname: newNormalized,
+      partnerNickname: cleanPartnerNickname,
+      updatedAt: now,
+    })
+
+    // Move the message the user already sent to the new key so it follows them.
+    if (nicknameChanged && profile.countdownId) {
+      const countdown = await ctx.db.get(profile.countdownId)
+      const sent = countdown?.messages?.[profile.normalizedNickname]
+
+      if (countdown?.messages && sent !== undefined) {
+        const messages = { ...countdown.messages }
+        messages[newNormalized] = sent
+        delete messages[profile.normalizedNickname]
+        await ctx.db.patch(profile.countdownId, { messages, updatedAt: now })
+      }
+    }
+
+    const updatedProfile = (await ctx.db.get(profile._id)) as Doc<'profiles'>
+
+    return buildCountdownState(ctx, updatedProfile)
+  },
+})
+
 // Sends a directional message to the partner. The text is stored under the
 // sender's normalized nickname; the partner's device reads that entry.
 export const sendMessage = mutation({

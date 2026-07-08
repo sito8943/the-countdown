@@ -137,7 +137,7 @@
   --color-text-strong: #fff8fb;
 
   --color-bg: #120813;
-  --color-surface: rgba(35, 18, 43, 0.78);
+  --color-surface: rgb(35, 18, 43);
   --color-border: rgba(255, 152, 190, 0.28);
   --color-track: rgba(255, 152, 190, 0.17);
   --color-input-bg: rgba(22, 10, 28, 0.92);

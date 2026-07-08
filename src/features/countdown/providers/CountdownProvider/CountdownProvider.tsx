@@ -81,6 +81,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   const createCountdown = useMutation(api.countdowns.createCountdown)
   const syncWithProfile = useMutation(api.countdowns.syncWithProfile)
   const updateMessages = useMutation(api.countdowns.updateMessages)
+  const updateProfile = useMutation(api.countdowns.updateProfile)
   const sendMessage = useMutation(api.countdowns.sendMessage)
 
   const matchingCachedState =
@@ -375,6 +376,10 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     }
 
     setFormError('')
+    setNicknameInput(activeProfile?.nickname ?? localProfile?.nickname ?? '')
+    setPartnerInput(
+      activeProfile?.partnerNickname ?? localProfile?.partnerNickname ?? '',
+    )
     setEyebrowInput(countdown.eyebrow ?? t.defaults.eyebrow)
     setTitleInput(countdown.title ?? t.defaults.title)
     setSetupStep(SETUP_STEP.MESSAGES)
@@ -443,17 +448,55 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
       return
     }
 
+    const nicknameError = nicknameErrorMessage(nicknameInput)
+
+    if (nicknameError) {
+      setFormError(nicknameError)
+      return
+    }
+
+    const nickname = nicknameInput.trim()
+    const partnerNickname = partnerInput.trim()
+
+    if (partnerNickname) {
+      const partnerError = nicknameErrorMessage(partnerNickname)
+
+      if (partnerError) {
+        setFormError(partnerError)
+        return
+      }
+
+      if (areSameNickname(nickname, partnerNickname)) {
+        setFormError(t.errors.sameNickname)
+        return
+      }
+    }
+
     try {
       setIsSubmitting(true)
-      const nextState = (await updateMessages({
+      // Save eyebrow/title under the current nickname before any rename.
+      await updateMessages({
         nickname: localProfile.nickname,
         eyebrow: eyebrowInput,
         title: titleInput,
+      })
+
+      const nextState = (await updateProfile({
+        currentNickname: localProfile.nickname,
+        nickname,
+        partnerNickname: partnerNickname || undefined,
       })) as CountdownState
+
+      const nextProfile = {
+        nickname,
+        partnerNickname: partnerNickname || undefined,
+      }
 
       setPendingCountdownState(nextState)
       storageService.saveCountdownCache(nextState)
       setCachedCountdownState(nextState)
+      storageService.saveLocalProfile(nextProfile)
+      setLocalProfile(nextProfile)
       setSetupStep(SETUP_STEP.IDLE)
     } catch (error) {
       setFormError(resolveErrorMessage(error, t.errors.saveMessages))

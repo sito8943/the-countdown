@@ -74,6 +74,8 @@ export const es = {
     messages: {
       eyebrow: 'Personalizar',
       title: 'Editar mensajes',
+      nicknameLabel: 'Tu nickname',
+      partnerLabel: 'Nickname de tu pareja',
       eyebrowLabel: 'Encabezado',
       titleLabel: 'Titulo',
       cancel: 'Cancelar',
