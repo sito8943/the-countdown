@@ -30,24 +30,16 @@ export function SetupDialog() {
   const { setupStep, closeDialog } = useCountdown()
   const dialogRef = useRef<HTMLDialogElement>(null)
 
+  // This component is mounted lazily only while a setup step is active
+  // (see CountdownScreen), so open the modal once on mount. Closing happens
+  // by unmounting when the step returns to idle.
   useEffect(() => {
     const dialog = dialogRef.current
 
-    if (!dialog) {
-      return
-    }
-
-    if (setupStep === SETUP_STEP.IDLE) {
-      if (dialog.open) {
-        dialog.close()
-      }
-      return
-    }
-
-    if (!dialog.open) {
+    if (dialog && !dialog.open) {
       dialog.showModal()
     }
-  }, [setupStep])
+  }, [])
 
   return (
     <dialog
