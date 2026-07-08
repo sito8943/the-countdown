@@ -1,4 +1,8 @@
 import { t } from '../../../../../lang'
+import {
+  Button,
+  TextInput,
+} from '../../../../../shared/components/elements'
 import { PARTNER_INPUT_ID } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
@@ -20,9 +24,8 @@ export function PartnerStep() {
       </div>
 
       <label htmlFor={PARTNER_INPUT_ID}>{t.setup.partner.label}</label>
-      <input
+      <TextInput
         id={PARTNER_INPUT_ID}
-        type="text"
         value={partnerInput}
         onChange={(event) => onPartnerChange(event.target.value)}
         autoFocus
@@ -30,9 +33,9 @@ export function PartnerStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <button type="submit" className="primary-action" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting}>
         {t.setup.partner.submit}
-      </button>
+      </Button>
     </form>
   )
 }

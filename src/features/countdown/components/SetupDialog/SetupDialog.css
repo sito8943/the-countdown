@@ -28,32 +28,6 @@
   font-weight: 700;
 }
 
-.setup-form input,
-.setup-form textarea {
-  width: 100%;
-  min-height: var(--size-input-min);
-  padding: var(--space-2) var(--space-3);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-sm);
-  box-sizing: border-box;
-  color: var(--color-text-strong);
-  background: var(--color-input-bg);
-  font: inherit;
-  font-size: var(--font-size-lg);
-}
-
-.setup-form textarea {
-  min-height: var(--size-textarea-min);
-  resize: vertical;
-  line-height: 1.4;
-}
-
-.setup-form input:focus-visible,
-.setup-form textarea:focus-visible {
-  outline: var(--border-width-focus) solid var(--color-accent-border);
-  outline-offset: 2px;
-}
-
 .field-error {
   color: var(--color-danger);
   font-size: var(--font-size-sm);

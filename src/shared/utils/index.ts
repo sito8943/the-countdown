@@ -1,3 +1,5 @@
+export { classNames } from './classNames'
+export type { ClassNameValue } from './types'
 export {
   areSameNickname,
   cleanNickname,

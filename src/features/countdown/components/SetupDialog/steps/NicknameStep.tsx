@@ -1,4 +1,8 @@
 import { t } from '../../../../../lang'
+import {
+  Button,
+  TextInput,
+} from '../../../../../shared/components/elements'
 import { NICKNAME_INPUT_ID } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
@@ -20,9 +24,8 @@ export function NicknameStep() {
       </div>
 
       <label htmlFor={NICKNAME_INPUT_ID}>{t.setup.nickname.label}</label>
-      <input
+      <TextInput
         id={NICKNAME_INPUT_ID}
-        type="text"
         value={nicknameInput}
         onChange={(event) => onNicknameChange(event.target.value)}
         autoFocus
@@ -30,9 +33,9 @@ export function NicknameStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <button type="submit" className="primary-action" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting}>
         {t.setup.nickname.submit}
-      </button>
+      </Button>
     </form>
   )
 }

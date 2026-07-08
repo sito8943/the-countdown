@@ -1,4 +1,8 @@
 import { t } from '../../../../../lang'
+import {
+  Button,
+  TextInput,
+} from '../../../../../shared/components/elements'
 import { DAYS_INPUT_ID } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
@@ -15,7 +19,7 @@ export function DaysStep() {
       </div>
 
       <label htmlFor={DAYS_INPUT_ID}>{t.setup.days.label}</label>
-      <input
+      <TextInput
         id={DAYS_INPUT_ID}
         type="number"
         inputMode="numeric"
@@ -28,9 +32,9 @@ export function DaysStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <button type="submit" className="primary-action" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting}>
         {t.setup.days.submit}
-      </button>
+      </Button>
     </form>
   )
 }

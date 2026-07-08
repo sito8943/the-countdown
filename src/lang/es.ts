@@ -66,13 +66,11 @@ export const es = {
     messages: {
       eyebrow: 'Personalizar',
       title: 'Editar mensajes',
-      description:
-        'Estos textos se comparten: los dos veran los mismos. Deja un campo vacio para volver al texto por defecto.',
       eyebrowLabel: 'Encabezado',
       titleLabel: 'Titulo',
       noteLabel: 'Nota',
       cancel: 'Cancelar',
-      submit: 'Guardar mensajes',
+      submit: 'Guardar',
     },
   },
   errors: {

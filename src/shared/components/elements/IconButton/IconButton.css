@@ -1,0 +1,6 @@
+.icon-button {
+  width: var(--size-input-min);
+  height: var(--size-input-min);
+  padding: 0;
+  flex: 0 0 auto;
+}

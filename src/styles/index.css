@@ -1,7 +1,9 @@
 @import './theme.css';
 
 :root {
-  font: var(--font-size-md) / var(--line-height-base) var(--font-family-base);
+  /* Keep the root at the browser default (16px) so rem = 16px and the
+     4px-based spacing scale stays exact. Base text size lives on body. */
+  font-size: 100%;
   color: var(--color-text);
   background: var(--color-bg);
   font-synthesis: none;
@@ -18,6 +20,8 @@ body {
   margin: 0;
   min-width: var(--size-viewport-min);
   min-height: 100svh;
+  font: var(--font-size-md) / var(--line-height-base) var(--font-family-base);
+  color: var(--color-text);
   background:
     linear-gradient(135deg, var(--color-accent-bg), transparent 38%),
     linear-gradient(315deg, var(--color-warm-bg), transparent 42%),
@@ -66,6 +70,10 @@ h2 {
 
 .primary-action,
 .secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   border: 0;
   border-radius: var(--radius-sm);
   font: inherit;
@@ -95,6 +103,29 @@ h2 {
 
 .primary-action:focus-visible,
 .secondary-action:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-accent-border);
+  outline-offset: 2px;
+}
+
+.field {
+  width: 100%;
+  min-height: var(--size-input-min);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+  color: var(--color-text-strong);
+  background: var(--color-input-bg);
+  font: inherit;
+}
+
+.field--area {
+  min-height: var(--size-textarea-min);
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.field:focus-visible {
   outline: var(--border-width-focus) solid var(--color-accent-border);
   outline-offset: 2px;
 }

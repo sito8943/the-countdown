@@ -1,5 +1,11 @@
 import { t } from '../../../../../lang'
 import {
+  Button,
+  BUTTON_VARIANT,
+  TextInput,
+  Textarea,
+} from '../../../../../shared/components/elements'
+import {
   MESSAGE_EYEBROW_INPUT_ID,
   MESSAGE_MAX_LENGTH,
   MESSAGE_NOTE_INPUT_ID,
@@ -26,15 +32,13 @@ export function MessagesStep() {
       <div>
         <p className="eyebrow">{t.setup.messages.eyebrow}</p>
         <h2>{t.setup.messages.title}</h2>
-        <p>{t.setup.messages.description}</p>
       </div>
 
       <label htmlFor={MESSAGE_EYEBROW_INPUT_ID}>
         {t.setup.messages.eyebrowLabel}
       </label>
-      <input
+      <TextInput
         id={MESSAGE_EYEBROW_INPUT_ID}
-        type="text"
         maxLength={MESSAGE_MAX_LENGTH.EYEBROW}
         placeholder={t.defaults.eyebrow}
         value={eyebrowInput}
@@ -45,9 +49,8 @@ export function MessagesStep() {
       <label htmlFor={MESSAGE_TITLE_INPUT_ID}>
         {t.setup.messages.titleLabel}
       </label>
-      <input
+      <TextInput
         id={MESSAGE_TITLE_INPUT_ID}
-        type="text"
         maxLength={MESSAGE_MAX_LENGTH.TITLE}
         placeholder={t.defaults.title}
         value={titleInput}
@@ -57,7 +60,7 @@ export function MessagesStep() {
       <label htmlFor={MESSAGE_NOTE_INPUT_ID}>
         {t.setup.messages.noteLabel}
       </label>
-      <textarea
+      <Textarea
         id={MESSAGE_NOTE_INPUT_ID}
         rows={3}
         maxLength={MESSAGE_MAX_LENGTH.NOTE}
@@ -69,21 +72,17 @@ export function MessagesStep() {
       {formError ? <p className="field-error">{formError}</p> : null}
 
       <div className="dialog-actions">
-        <button
+        <Button
           type="button"
-          className="secondary-action"
+          variant={BUTTON_VARIANT.SECONDARY}
           onClick={closeDialog}
           disabled={isSubmitting}
         >
           {t.setup.messages.cancel}
-        </button>
-        <button
-          type="submit"
-          className="primary-action"
-          disabled={isSubmitting}
-        >
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
           {t.setup.messages.submit}
-        </button>
+        </Button>
       </div>
     </form>
   )

@@ -1,4 +1,8 @@
 import { t } from '../../../../../lang'
+import {
+  Button,
+  BUTTON_VARIANT,
+} from '../../../../../shared/components/elements'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
 export function SyncStep() {
@@ -27,21 +31,17 @@ export function SyncStep() {
       {formError ? <p className="field-error">{formError}</p> : null}
 
       <div className="dialog-actions">
-        <button
+        <Button
           type="button"
-          className="secondary-action"
+          variant={BUTTON_VARIANT.SECONDARY}
           onClick={createOwnCountdown}
           disabled={isSubmitting}
         >
           {t.setup.sync.createOwn}
-        </button>
-        <button
-          type="submit"
-          className="primary-action"
-          disabled={isSubmitting}
-        >
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
           {t.setup.sync.submit}
-        </button>
+        </Button>
       </div>
     </form>
   )

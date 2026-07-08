@@ -1,4 +1,6 @@
+import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { t } from '../../../../lang'
+import { IconButton } from '../../../../shared/components/elements'
 import { formatPlacedDate } from '../../../../shared/utils'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { TimeScale } from '../TimeScale'
@@ -59,13 +61,11 @@ export function CountdownCard() {
             )}{' '}
             {displayNote}
           </p>
-          <button
-            type="button"
-            className="secondary-action"
+          <IconButton
+            icon={faPen}
+            label={t.summary.editMessages}
             onClick={openMessages}
-          >
-            {t.summary.editMessages}
-          </button>
+          />
         </div>
       ) : (
         <p className="loading-copy">
