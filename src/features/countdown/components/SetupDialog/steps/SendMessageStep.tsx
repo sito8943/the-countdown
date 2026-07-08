@@ -39,6 +39,9 @@ export function SendMessageStep() {
         onChange={(event) => onMessageChange(event.target.value)}
         autoFocus
       />
+      <span className="char-count">
+        {messageInput.length}/{MESSAGE_MAX_LENGTH.MESSAGE}
+      </span>
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
