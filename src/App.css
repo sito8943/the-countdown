@@ -1,0 +1,228 @@
+.countdown-shell {
+  width: min(960px, calc(100% - 32px));
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.countdown-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.hero-copy {
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 560px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.hero-image {
+  width: 118px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.countdown-card {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 24px;
+}
+
+.days-block {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+.days-value {
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: 112px;
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.days-label {
+  color: var(--text-h);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.progress-block {
+  display: grid;
+  gap: 10px;
+}
+
+.progress-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--track-bg);
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--warm-accent));
+  transition: width 0.35s ease;
+}
+
+.progress-meta,
+.settings-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.progress-meta {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.settings-summary {
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.settings-summary p {
+  max-width: 640px;
+  color: var(--text);
+}
+
+.primary-action,
+.secondary-action {
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-action {
+  width: 100%;
+  padding: 12px 16px;
+  color: var(--button-text);
+  background: var(--accent);
+}
+
+.secondary-action {
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  color: var(--text-h);
+  background: var(--accent-bg);
+}
+
+.primary-action:focus-visible,
+.secondary-action:focus-visible,
+.setup-form input:focus-visible {
+  outline: 3px solid var(--accent-border);
+  outline-offset: 2px;
+}
+
+.setup-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--dialog-shadow);
+}
+
+.setup-dialog::backdrop {
+  background: rgba(8, 6, 13, 0.55);
+}
+
+.setup-form {
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  text-align: left;
+}
+
+.setup-form h2 {
+  margin: 0 0 8px;
+}
+
+.setup-form label {
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.setup-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--text-h);
+  background: var(--input-bg);
+  font: inherit;
+  font-size: 20px;
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .countdown-shell {
+    justify-content: flex-start;
+    padding-top: 24px;
+  }
+
+  .countdown-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-image {
+    width: 88px;
+  }
+
+  .countdown-card {
+    padding: 22px;
+  }
+
+  .days-value {
+    font-size: 78px;
+  }
+
+  .progress-meta,
+  .settings-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .secondary-action {
+    width: 100%;
+  }
+}
