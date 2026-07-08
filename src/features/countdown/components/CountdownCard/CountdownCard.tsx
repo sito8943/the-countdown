@@ -1,4 +1,4 @@
-import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faPen } from '@fortawesome/free-solid-svg-icons'
 import { t } from '../../../../lang'
 import {
   BUTTON_VARIANT,
@@ -13,12 +13,15 @@ export function CountdownCard() {
     activeProfile,
     localProfile,
     countdown,
-    displayNote,
+    receivedMessage,
     progress,
     elapsedDays,
     isCountdownLoading,
     openMessages,
+    openSendMessage,
   } = useCountdown()
+
+  const partnerNickname = activeProfile?.partnerNickname
 
   return (
     <section className="countdown-card" aria-live="polite">
@@ -53,14 +56,35 @@ export function CountdownCard() {
 
       {countdown ? (
         <div className="settings-summary">
-          <p>{displayNote}</p>
-          <IconButton
-            className="edit-fab"
-            variant={BUTTON_VARIANT.PRIMARY}
-            icon={faPen}
-            label={t.summary.editMessages}
-            onClick={openMessages}
-          />
+          {receivedMessage ? (
+            <p>
+              {partnerNickname ? (
+                <span className="message-from">
+                  {t.summary.messageFrom(partnerNickname)}
+                </span>
+              ) : null}
+              {receivedMessage}
+            </p>
+          ) : (
+            <p className="message-empty">{t.summary.noMessage}</p>
+          )}
+
+          <div className="fab-stack">
+            <IconButton
+              className="edit-fab"
+              variant={BUTTON_VARIANT.SECONDARY}
+              icon={faPen}
+              label={t.summary.editMessages}
+              onClick={openMessages}
+            />
+            <IconButton
+              className="send-fab"
+              variant={BUTTON_VARIANT.PRIMARY}
+              icon={faPaperPlane}
+              label={t.summary.sendMessage}
+              onClick={openSendMessage}
+            />
+          </div>
         </div>
       ) : (
         <p className="loading-copy">

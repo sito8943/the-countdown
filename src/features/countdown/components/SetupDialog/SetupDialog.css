@@ -1,4 +1,5 @@
 .setup-dialog {
+  position: relative;
   width: min(var(--size-dialog-max), calc(100% - var(--space-8)));
   padding: 0;
   border: var(--border-width) solid var(--color-border);
@@ -6,6 +7,22 @@
   color: var(--color-text);
   background: var(--color-surface);
   box-shadow: var(--shadow-dialog);
+}
+
+/* Ghost close button, danger color, top-right corner. */
+.icon-button.dialog-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+  padding: var(--space-1);
+  color: var(--color-danger);
+  background: transparent;
+}
+
+.icon-button.dialog-close:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-danger);
+  outline-offset: 2px;
 }
 
 .setup-dialog::backdrop {
@@ -35,7 +52,8 @@
 
 .dialog-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: var(--space-2-5);
 }
 
@@ -45,7 +63,8 @@
 
 @media (max-width: 720px) {
   .dialog-actions {
-    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
   }
 
   .dialog-actions .secondary-action {

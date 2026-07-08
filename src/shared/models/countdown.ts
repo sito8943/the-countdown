@@ -10,6 +10,7 @@ export type Countdown = {
   eyebrow?: string
   title?: string
   note?: string
+  messages?: Record<string, string>
   createdAt?: number
   updatedAt?: number
 }

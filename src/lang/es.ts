@@ -24,6 +24,9 @@ export const es = {
       `Conteo creado por ${owner} el ${date}.`,
     info: 'Informacion del conteo',
     editMessages: 'Editar mensajes',
+    sendMessage: 'Enviar mensaje',
+    messageFrom: (partner: string) => `Mensaje de ${partner}`,
+    noMessage: 'Aun no hay mensaje.',
   },
   theme: {
     toDark: 'Activar modo oscuro',
@@ -34,6 +37,7 @@ export const es = {
     completeSteps: 'Completa los pasos iniciales para empezar.',
   },
   setup: {
+    close: 'Cerrar',
     nickname: {
       eyebrow: 'Primer inicio',
       title: 'Tu nickname',
@@ -72,9 +76,19 @@ export const es = {
       title: 'Editar mensajes',
       eyebrowLabel: 'Encabezado',
       titleLabel: 'Titulo',
-      noteLabel: 'Nota',
       cancel: 'Cancelar',
       submit: 'Guardar',
+    },
+    sendMessage: {
+      eyebrow: 'Para tu persona',
+      title: 'Enviar mensaje',
+      description: 'Lo vera en su dispositivo cuando abra el countdown.',
+      label: 'Tu mensaje',
+      placeholder: 'Escribe algo lindo...',
+      cancel: 'Cancelar',
+      copy: 'Copiar URL',
+      copied: 'Copiado',
+      submit: 'Enviar',
     },
   },
   errors: {
@@ -87,5 +101,6 @@ export const es = {
     sync: 'No se pudo sincronizar el countdown.',
     createCountdown: 'No se pudo crear el countdown.',
     saveMessages: 'No se pudieron guardar los mensajes.',
+    sendMessage: 'No se pudo enviar el mensaje.',
   },
 } as const

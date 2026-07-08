@@ -186,7 +186,6 @@ export const updateMessages = mutation({
     nickname: v.string(),
     eyebrow: v.optional(v.string()),
     title: v.optional(v.string()),
-    note: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const profile = await getProfileByNickname(ctx.db, args.nickname)
@@ -198,7 +197,45 @@ export const updateMessages = mutation({
     await ctx.db.patch(profile.countdownId, {
       eyebrow: cleanMessage(args.eyebrow, 60),
       title: cleanMessage(args.title, 80),
-      note: cleanMessage(args.note, 240),
+      updatedAt: Date.now(),
+    })
+
+    return buildCountdownState(ctx, profile)
+  },
+})
+
+// Sends a directional message to the partner. The text is stored under the
+// sender's normalized nickname; the partner's device reads that entry.
+export const sendMessage = mutation({
+  args: {
+    nickname: v.string(),
+    message: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const profile = await getProfileByNickname(ctx.db, args.nickname)
+
+    if (!profile?.countdownId) {
+      throw new Error('No hay countdown para editar.')
+    }
+
+    const countdown = await ctx.db.get(profile.countdownId)
+
+    if (!countdown) {
+      throw new Error('No hay countdown para editar.')
+    }
+
+    const key = normalizeNickname(profile.nickname)
+    const cleanValue = cleanMessage(args.message, 240)
+    const messages = { ...(countdown.messages ?? {}) }
+
+    if (cleanValue === undefined) {
+      delete messages[key]
+    } else {
+      messages[key] = cleanValue
+    }
+
+    await ctx.db.patch(profile.countdownId, {
+      messages,
       updatedAt: Date.now(),
     })
 

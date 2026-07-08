@@ -3,12 +3,10 @@ import {
   Button,
   BUTTON_VARIANT,
   TextInput,
-  Textarea,
 } from '../../../../../shared/components/elements'
 import {
   MESSAGE_EYEBROW_INPUT_ID,
   MESSAGE_MAX_LENGTH,
-  MESSAGE_NOTE_INPUT_ID,
   MESSAGE_TITLE_INPUT_ID,
 } from '../../../constants'
 import { useCountdown } from '../../../providers/CountdownProvider'
@@ -19,8 +17,6 @@ export function MessagesStep() {
     onEyebrowChange,
     titleInput,
     onTitleChange,
-    noteInput,
-    onNoteChange,
     submitMessages,
     closeDialog,
     formError,
@@ -55,18 +51,6 @@ export function MessagesStep() {
         placeholder={t.defaults.title}
         value={titleInput}
         onChange={(event) => onTitleChange(event.target.value)}
-      />
-
-      <label htmlFor={MESSAGE_NOTE_INPUT_ID}>
-        {t.setup.messages.noteLabel}
-      </label>
-      <Textarea
-        id={MESSAGE_NOTE_INPUT_ID}
-        rows={3}
-        maxLength={MESSAGE_MAX_LENGTH.NOTE}
-        placeholder={t.defaults.note}
-        value={noteInput}
-        onChange={(event) => onNoteChange(event.target.value)}
       />
 
       {formError ? <p className="field-error">{formError}</p> : null}

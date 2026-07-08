@@ -14,6 +14,7 @@ import {
   getRemainingDays,
   getRemainingMs,
   NICKNAME_ERROR,
+  normalizeNickname,
   padTimeUnit,
 } from '../../../../shared/utils'
 import { SETUP_STEP } from '../../constants'
@@ -61,7 +62,8 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   const [daysInput, setDaysInput] = useState('')
   const [eyebrowInput, setEyebrowInput] = useState('')
   const [titleInput, setTitleInput] = useState('')
-  const [noteInput, setNoteInput] = useState('')
+  const [messageInput, setMessageInput] = useState('')
+  const [messageCopied, setMessageCopied] = useState(false)
   const [formError, setFormError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [syncCandidate, setSyncCandidate] = useState<CountdownState | null>(
@@ -79,6 +81,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   const createCountdown = useMutation(api.countdowns.createCountdown)
   const syncWithProfile = useMutation(api.countdowns.syncWithProfile)
   const updateMessages = useMutation(api.countdowns.updateMessages)
+  const sendMessage = useMutation(api.countdowns.sendMessage)
 
   const matchingCachedState =
     cachedCountdownState?.countdown &&
@@ -101,7 +104,12 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   const countdown = activeState?.countdown ?? null
   const displayEyebrow = countdown?.eyebrow ?? t.defaults.eyebrow
   const displayTitle = countdown?.title ?? t.defaults.title
-  const displayNote = countdown?.note ?? t.defaults.note
+  // Message received from the partner: stored under the partner's nickname.
+  const partnerNickname = activeProfile?.partnerNickname
+  const receivedMessage =
+    partnerNickname && countdown?.messages
+      ? (countdown.messages[normalizeNickname(partnerNickname)] ?? null)
+      : null
 
   const remainingMs = useMemo(
     () => getRemainingMs(countdown, now),
@@ -239,8 +247,9 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     setFormError('')
   }
 
-  function onNoteChange(value: string) {
-    setNoteInput(value)
+  function onMessageChange(value: string) {
+    setMessageInput(value)
+    setMessageCopied(false)
     setFormError('')
   }
 
@@ -368,8 +377,61 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     setFormError('')
     setEyebrowInput(countdown.eyebrow ?? t.defaults.eyebrow)
     setTitleInput(countdown.title ?? t.defaults.title)
-    setNoteInput(countdown.note ?? t.defaults.note)
     setSetupStep(SETUP_STEP.MESSAGES)
+  }
+
+  function openSendMessage() {
+    if (!countdown) {
+      return
+    }
+
+    // Prefill with the message the current user already sent, so they edit it.
+    const myNickname = activeProfile?.nickname ?? localProfile?.nickname
+    const sent =
+      myNickname && countdown.messages
+        ? (countdown.messages[normalizeNickname(myNickname)] ?? '')
+        : ''
+
+    setFormError('')
+    setMessageCopied(false)
+    setMessageInput(sent)
+    setSetupStep(SETUP_STEP.SEND_MESSAGE)
+  }
+
+  async function copyCurrentUrl() {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setMessageCopied(true)
+    } catch {
+      setMessageCopied(false)
+    }
+  }
+
+  async function submitSendMessage(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setFormError('')
+
+    if (!localProfile?.nickname) {
+      setSetupStep(SETUP_STEP.NICKNAME)
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+      const nextState = (await sendMessage({
+        nickname: localProfile.nickname,
+        message: messageInput,
+      })) as CountdownState
+
+      setPendingCountdownState(nextState)
+      storageService.saveCountdownCache(nextState)
+      setCachedCountdownState(nextState)
+      setSetupStep(SETUP_STEP.IDLE)
+    } catch (error) {
+      setFormError(resolveErrorMessage(error, t.errors.sendMessage))
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   async function submitMessages(event: FormEvent<HTMLFormElement>) {
@@ -387,7 +449,6 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
         nickname: localProfile.nickname,
         eyebrow: eyebrowInput,
         title: titleInput,
-        note: noteInput,
       })) as CountdownState
 
       setPendingCountdownState(nextState)
@@ -454,7 +515,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     isCountdownLoading,
     displayEyebrow,
     displayTitle,
-    displayNote,
+    receivedMessage,
     remainingTime,
     timeReadout,
     timeReadoutLabel,
@@ -476,14 +537,18 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     onEyebrowChange,
     titleInput,
     onTitleChange,
-    noteInput,
-    onNoteChange,
+    messageInput,
+    onMessageChange,
+    messageCopied,
     submitNickname,
     submitPartner,
     submitSync,
     submitDays,
     submitMessages,
     openMessages,
+    openSendMessage,
+    submitSendMessage,
+    copyCurrentUrl,
     createOwnCountdown,
     closeDialog,
   }

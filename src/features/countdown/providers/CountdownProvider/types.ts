@@ -25,7 +25,8 @@ export type CountdownContextValue = {
   // Display copy (custom message or default)
   displayEyebrow: string
   displayTitle: string
-  displayNote: string
+  // Message received from the partner (null when none yet)
+  receivedMessage: string | null
 
   // Derived time values
   remainingTime: DurationParts | null
@@ -53,8 +54,9 @@ export type CountdownContextValue = {
   onEyebrowChange: (value: string) => void
   titleInput: string
   onTitleChange: (value: string) => void
-  noteInput: string
-  onNoteChange: (value: string) => void
+  messageInput: string
+  onMessageChange: (value: string) => void
+  messageCopied: boolean
 
   // Actions
   submitNickname: (event: FormEvent<HTMLFormElement>) => void
@@ -63,6 +65,9 @@ export type CountdownContextValue = {
   submitDays: (event: FormEvent<HTMLFormElement>) => void
   submitMessages: (event: FormEvent<HTMLFormElement>) => void
   openMessages: () => void
+  openSendMessage: () => void
+  submitSendMessage: (event: FormEvent<HTMLFormElement>) => void
+  copyCurrentUrl: () => void
   createOwnCountdown: () => void
   closeDialog: () => void
 }
