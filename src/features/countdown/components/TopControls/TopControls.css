@@ -1,0 +1,28 @@
+.top-controls {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.icon-button.info-trigger,
+.icon-button.theme-toggle {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-muted);
+}
+
+.icon-button.info-trigger:hover,
+.icon-button.info-trigger:focus-visible,
+.icon-button.theme-toggle:hover,
+.icon-button.theme-toggle:focus-visible {
+  color: var(--color-text-strong);
+  background: var(--color-accent-bg);
+}

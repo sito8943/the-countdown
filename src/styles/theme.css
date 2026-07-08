@@ -10,7 +10,7 @@
   --color-text-strong: #2d1623;
 
   --color-bg: #fff7f2;
-  --color-surface: rgba(255, 255, 255, 0.78);
+  --color-surface: rgb(255, 255, 255);
   --color-border: rgba(218, 154, 177, 0.42);
   --color-track: rgba(218, 154, 177, 0.24);
   --color-input-bg: rgba(255, 248, 244, 0.92);
@@ -127,35 +127,35 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Romantic night mode */
-    --color-text: #f2dce7;
-    --color-muted: #c9a8b9;
-    --color-text-strong: #fff8fb;
+/* Dark tokens are driven by the `data-theme` attribute (set before paint by the
+   inline script in index.html and toggled at runtime by useTheme), so the OS
+   preference is only the initial default and the user can override it. */
+:root[data-theme='dark'] {
+  /* Romantic night mode */
+  --color-text: #f2dce7;
+  --color-muted: #c9a8b9;
+  --color-text-strong: #fff8fb;
 
-    --color-bg: #120813;
-    --color-surface: rgba(35, 18, 43, 0.78);
-    --color-border: rgba(255, 152, 190, 0.28);
-    --color-track: rgba(255, 152, 190, 0.17);
-    --color-input-bg: rgba(22, 10, 28, 0.92);
+  --color-bg: #120813;
+  --color-surface: rgba(35, 18, 43, 0.78);
+  --color-border: rgba(255, 152, 190, 0.28);
+  --color-track: rgba(255, 152, 190, 0.17);
+  --color-input-bg: rgba(22, 10, 28, 0.92);
 
-    --color-accent: #ff7aaa;
-    --color-warm-accent: #ffd1a6;
-    --color-accent-bg: rgba(255, 122, 170, 0.16);
-    --color-accent-border: rgba(255, 122, 170, 0.52);
-    --color-warm-bg: rgba(255, 209, 166, 0.13);
+  --color-accent: #ff7aaa;
+  --color-warm-accent: #ffd1a6;
+  --color-accent-bg: rgba(255, 122, 170, 0.16);
+  --color-accent-border: rgba(255, 122, 170, 0.52);
+  --color-warm-bg: rgba(255, 209, 166, 0.13);
 
-    --color-button-text: #2b0d1a;
-    --color-danger: #ff9aae;
-    --color-backdrop: rgba(9, 3, 12, 0.72);
+  --color-button-text: #2b0d1a;
+  --color-danger: #ff9aae;
+  --color-backdrop: rgba(9, 3, 12, 0.72);
 
-    --shadow-card:
-      rgba(255, 122, 170, 0.18) 0 1.25rem 3rem,
-      rgba(0, 0, 0, 0.28) 0 0.5rem 1.5rem;
+  --shadow-card:
+    rgba(255, 122, 170, 0.18) 0 1.25rem 3rem,
+    rgba(0, 0, 0, 0.28) 0 0.5rem 1.5rem;
 
-    --shadow-dialog:
-      rgba(0, 0, 0, 0.38) 0 1.5rem 4rem,
-      rgba(255, 122, 170, 0.2) 0 0.5rem 1.5rem;
-  }
+  --shadow-dialog:
+    rgba(0, 0, 0, 0.38) 0 1.5rem 4rem, rgba(255, 122, 170, 0.2) 0 0.5rem 1.5rem;
 }

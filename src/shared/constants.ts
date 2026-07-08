@@ -1,5 +1,6 @@
 export const PROFILE_STORAGE_KEY = 'the-countdown:profile'
 export const COUNTDOWN_CACHE_STORAGE_KEY = 'the-countdown:countdown-cache'
+export const THEME_STORAGE_KEY = 'the-countdown:theme'
 
 export const DAY_IN_MS = 24 * 60 * 60 * 1000
 export const HOUR_IN_MS = 60 * 60 * 1000

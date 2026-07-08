@@ -3,6 +3,7 @@ import { SETUP_STEP } from '../../constants'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { CountdownCard } from '../CountdownCard'
 import { Hero } from '../Hero'
+import { TopControls } from '../TopControls'
 
 // The setup dialog and all its steps are only needed while configuring or
 // editing the countdown. Split them into their own chunk so returning users
@@ -17,6 +18,7 @@ export function CountdownScreen() {
 
   return (
     <>
+      <TopControls />
       <Hero />
       <CountdownCard />
       {isSetupOpen ? (

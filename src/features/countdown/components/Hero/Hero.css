@@ -1,37 +1,8 @@
 .countdown-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: var(--space-6);
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-copy {
   text-align: left;
-}
-
-.hero-title-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.icon-button.info-trigger {
-  width: auto;
-  height: auto;
-  min-height: 0;
-  padding: 0;
-  border-radius: var(--radius-full);
-  background: transparent;
-  color: var(--color-muted);
-}
-
-.icon-button.info-trigger:hover,
-.icon-button.info-trigger:focus-visible {
-  color: var(--color-text-strong);
-}
-
-@media (max-width: 720px) {
-  .countdown-hero {
-    grid-template-columns: 1fr;
-  }
 }

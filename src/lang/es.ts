@@ -26,6 +26,10 @@ export const es = {
     info: 'Informacion del conteo',
     editMessages: 'Editar mensajes',
   },
+  theme: {
+    toDark: 'Activar modo oscuro',
+    toLight: 'Activar modo claro',
+  },
   loading: {
     shared: 'Cargando countdown compartido...',
     completeSteps: 'Completa los pasos iniciales para empezar.',
