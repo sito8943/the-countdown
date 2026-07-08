@@ -23,6 +23,7 @@ export const es = {
   summary: {
     createdBy: (owner: string, date: string) =>
       `Conteo creado por ${owner} el ${date}.`,
+    info: 'Informacion del conteo',
     editMessages: 'Editar mensajes',
   },
   loading: {

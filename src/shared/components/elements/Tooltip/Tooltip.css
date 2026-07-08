@@ -1,0 +1,30 @@
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip-popup {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  z-index: 30;
+  width: max-content;
+  max-width: min(var(--size-summary-max), calc(100vw - 2 * var(--space-5)));
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.tooltip-popup[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+}

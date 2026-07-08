@@ -88,7 +88,7 @@
 }
 
 .settings-summary {
-  padding-top: var(--space-1);
+  padding-top: var(--space-3);
   border-top: var(--border-width) solid var(--color-border);
   text-align: left;
 }
@@ -96,6 +96,17 @@
 .settings-summary p {
   max-width: var(--size-summary-max);
   color: var(--color-text);
+}
+
+.icon-button.edit-fab {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 20;
+  width: var(--size-fab);
+  height: var(--size-fab);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-card);
 }
 
 .loading-copy {
@@ -116,12 +127,6 @@
 
   .readout-caption {
     flex-basis: 100%;
-  }
-
-  .progress-meta,
-  .settings-summary {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }
 

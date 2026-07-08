@@ -1,7 +1,6 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { t } from '../../../../lang'
-import { IconButton } from '../../../../shared/components/elements'
-import { formatPlacedDate } from '../../../../shared/utils'
+import { BUTTON_VARIANT, IconButton } from '../../../../shared/components/elements'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { TimeScale } from '../TimeScale'
 import './CountdownCard.css'
@@ -54,14 +53,10 @@ export function CountdownCard() {
 
       {countdown ? (
         <div className="settings-summary">
-          <p>
-            {t.summary.createdBy(
-              countdown.ownerNickname,
-              formatPlacedDate(countdown.placedAt),
-            )}{' '}
-            {displayNote}
-          </p>
+          <p>{displayNote}</p>
           <IconButton
+            className="edit-fab"
+            variant={BUTTON_VARIANT.PRIMARY}
             icon={faPen}
             label={t.summary.editMessages}
             onClick={openMessages}
