@@ -23,7 +23,6 @@ export function CountdownCard() {
   return (
     <section className="countdown-card" aria-live="polite">
       <div className="countdown-readout">
-        <p className="readout-caption">{t.readout.caption}</p>
         <TimeScale />
       </div>
 
@@ -45,7 +44,7 @@ export function CountdownCard() {
 
       <div className="profile-row">
         <p className="status-pill">
-          {activeProfile?.nickname ?? localProfile?.nickname ?? t.profile.empty}{" "}
+          {activeProfile?.nickname ?? localProfile?.nickname ?? t.profile.empty}{' '}
           {activeProfile?.partnerNickname
             ? t.profile.with(activeProfile.partnerNickname)
             : null}
