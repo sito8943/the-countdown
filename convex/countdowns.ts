@@ -1,10 +1,6 @@
 import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'
-import type {
-  DatabaseReader,
-  MutationCtx,
-  QueryCtx,
-} from './_generated/server'
+import type { DatabaseReader, MutationCtx, QueryCtx } from './_generated/server'
 import type { Doc, Id } from './_generated/dataModel'
 
 function cleanNickname(nickname: string) {
@@ -84,7 +80,9 @@ async function upsertProfile(
     await ctx.db.patch(existingProfile._id, {
       nickname: cleanValue,
       normalizedNickname,
-      ...(cleanPartnerNickname ? { partnerNickname: cleanPartnerNickname } : {}),
+      ...(cleanPartnerNickname
+        ? { partnerNickname: cleanPartnerNickname }
+        : {}),
       updatedAt: now,
     })
 
@@ -143,7 +141,9 @@ export const createCountdown = mutation({
   },
   handler: async (ctx, args) => {
     if (!Number.isInteger(args.initialDays) || args.initialDays < 0) {
-      throw new Error('La cantidad de dias debe ser un entero mayor o igual a 0.')
+      throw new Error(
+        'La cantidad de dias debe ser un entero mayor o igual a 0.',
+      )
     }
 
     const profile = await upsertProfile(

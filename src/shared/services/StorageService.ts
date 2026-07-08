@@ -1,7 +1,4 @@
-import {
-  COUNTDOWN_CACHE_STORAGE_KEY,
-  PROFILE_STORAGE_KEY,
-} from '../constants'
+import { COUNTDOWN_CACHE_STORAGE_KEY, PROFILE_STORAGE_KEY } from '../constants'
 import type { CountdownState, LocalProfile } from '../models'
 
 /**

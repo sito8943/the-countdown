@@ -204,15 +204,15 @@ and derive its type from it. Do **not** use bare string unions or inline literal
 ```ts
 // features/countdown/constants.ts (pattern already used by SETUP_STEP)
 export const SETUP_STEP = {
-  IDLE: "idle",
-  NICKNAME: "nickname",
-  PARTNER: "partner",
-  SYNC: "sync",
-  DAYS: "days",
-  MESSAGES: "messages",
-} as const;
+  IDLE: 'idle',
+  NICKNAME: 'nickname',
+  PARTNER: 'partner',
+  SYNC: 'sync',
+  DAYS: 'days',
+  MESSAGES: 'messages',
+} as const
 
-export type SetupStep = (typeof SETUP_STEP)[keyof typeof SETUP_STEP];
+export type SetupStep = (typeof SETUP_STEP)[keyof typeof SETUP_STEP]
 ```
 
 Rules:

@@ -39,10 +39,7 @@ function resolveErrorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback
 }
 
-function areSameLocalProfile(
-  first: LocalProfile | null,
-  second: LocalProfile,
-) {
+function areSameLocalProfile(first: LocalProfile | null, second: LocalProfile) {
   return (
     first?.nickname === second.nickname &&
     first.partnerNickname === second.partnerNickname
@@ -87,7 +84,10 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     cachedCountdownState?.countdown &&
     cachedCountdownState.profile?.nickname &&
     localProfile?.nickname &&
-    areSameNickname(cachedCountdownState.profile.nickname, localProfile.nickname)
+    areSameNickname(
+      cachedCountdownState.profile.nickname,
+      localProfile.nickname,
+    )
       ? cachedCountdownState
       : null
   const activeState = viewer?.countdown
@@ -146,7 +146,8 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
         remainingTime.seconds,
       )
     : t.readout.loading
-  const isCountdownLoading = viewer === undefined && Boolean(localProfile?.nickname)
+  const isCountdownLoading =
+    viewer === undefined && Boolean(localProfile?.nickname)
 
   // Syncs the Convex query result (external store) into local cache/profile
   // state. setState here is the intended "subscribe to external system" case.

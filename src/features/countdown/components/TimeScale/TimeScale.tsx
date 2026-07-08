@@ -10,7 +10,11 @@ export function TimeScale() {
       aria-label={timeReadoutLabel}
     >
       <span className="time-part time-days">
-        {remainingTime ? <strong>{timeReadout.days}</strong> : <small>dd</small>}
+        {remainingTime ? (
+          <strong>{timeReadout.days}</strong>
+        ) : (
+          <small>dd</small>
+        )}
       </span>
       <span className="time-colon">:</span>
       <span className="time-part time-hours">

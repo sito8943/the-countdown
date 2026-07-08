@@ -58,7 +58,8 @@ export const es = {
     days: {
       eyebrow: 'Countdown',
       title: 'Cuantos dias faltan?',
-      description: 'Este conteo quedara guardado en Convex para poder compartirlo.',
+      description:
+        'Este conteo quedara guardado en Convex para poder compartirlo.',
       label: 'Dias restantes',
       submit: 'Guardar countdown',
     },

@@ -69,9 +69,7 @@ export function CountdownCard() {
         </div>
       ) : (
         <p className="loading-copy">
-          {isCountdownLoading
-            ? t.loading.shared
-            : t.loading.completeSteps}
+          {isCountdownLoading ? t.loading.shared : t.loading.completeSteps}
         </p>
       )}
     </section>

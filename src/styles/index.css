@@ -1,8 +1,7 @@
 @import './theme.css';
 
 :root {
-  font:
-    var(--font-size-md) / var(--line-height-base) var(--font-family-base);
+  font: var(--font-size-md) / var(--line-height-base) var(--font-family-base);
   color: var(--color-text);
   background: var(--color-bg);
   font-synthesis: none;

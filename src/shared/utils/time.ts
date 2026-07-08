@@ -1,9 +1,4 @@
-import {
-  DAY_IN_MS,
-  HOUR_IN_MS,
-  MINUTE_IN_MS,
-  SECOND_IN_MS,
-} from '../constants'
+import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../constants'
 import type { Countdown, DurationParts } from '../models'
 
 export function getRemainingMs(countdown: Countdown | null, now = Date.now()) {
@@ -16,7 +11,10 @@ export function getRemainingMs(countdown: Countdown | null, now = Date.now()) {
   return Math.max(0, totalMs - Math.max(0, now - countdown.placedAt))
 }
 
-export function getRemainingDays(countdown: Countdown | null, now = Date.now()) {
+export function getRemainingDays(
+  countdown: Countdown | null,
+  now = Date.now(),
+) {
   if (!countdown) {
     return null
   }

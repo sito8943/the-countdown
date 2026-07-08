@@ -77,7 +77,11 @@ export function MessagesStep() {
         >
           {t.setup.messages.cancel}
         </button>
-        <button type="submit" className="primary-action" disabled={isSubmitting}>
+        <button
+          type="submit"
+          className="primary-action"
+          disabled={isSubmitting}
+        >
           {t.setup.messages.submit}
         </button>
       </div>
