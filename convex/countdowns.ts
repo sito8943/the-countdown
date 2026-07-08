@@ -1,0 +1,211 @@
+import { v } from 'convex/values'
+import { mutation, query } from './_generated/server'
+import type {
+  DatabaseReader,
+  MutationCtx,
+  QueryCtx,
+} from './_generated/server'
+import type { Doc, Id } from './_generated/dataModel'
+
+function cleanNickname(nickname: string) {
+  return nickname.trim()
+}
+
+function normalizeNickname(nickname: string) {
+  return cleanNickname(nickname).toLowerCase()
+}
+
+function cleanOptionalNickname(nickname: string | undefined) {
+  const cleanValue = cleanNickname(nickname ?? '')
+
+  return cleanValue.length > 0 ? cleanValue : undefined
+}
+
+function assertNickname(nickname: string) {
+  const cleanValue = cleanNickname(nickname)
+
+  if (cleanValue.length < 2) {
+    throw new Error('El nickname debe tener al menos 2 caracteres.')
+  }
+
+  if (cleanValue.length > 32) {
+    throw new Error('El nickname no puede tener mas de 32 caracteres.')
+  }
+
+  return cleanValue
+}
+
+function assertDifferentNicknames(nickname: string, partnerNickname?: string) {
+  if (
+    partnerNickname &&
+    normalizeNickname(nickname) === normalizeNickname(partnerNickname)
+  ) {
+    throw new Error('Los nicknames deben ser diferentes.')
+  }
+}
+
+async function getProfileByNickname(db: DatabaseReader, nickname: string) {
+  return await db
+    .query('profiles')
+    .withIndex('by_normalized_nickname', (index) =>
+      index.eq('normalizedNickname', normalizeNickname(nickname)),
+    )
+    .unique()
+}
+
+async function buildCountdownState(
+  ctx: QueryCtx | MutationCtx,
+  profile: Doc<'profiles'> | null,
+) {
+  const countdown = profile?.countdownId
+    ? await ctx.db.get(profile.countdownId)
+    : null
+
+  return {
+    profile,
+    countdown,
+  }
+}
+
+async function upsertProfile(
+  ctx: MutationCtx,
+  nickname: string,
+  partnerNickname?: string,
+) {
+  const cleanValue = assertNickname(nickname)
+  const cleanPartnerNickname = cleanOptionalNickname(partnerNickname)
+  assertDifferentNicknames(cleanValue, cleanPartnerNickname)
+
+  const normalizedNickname = normalizeNickname(cleanValue)
+  const existingProfile = await getProfileByNickname(ctx.db, cleanValue)
+  const now = Date.now()
+
+  if (existingProfile) {
+    await ctx.db.patch(existingProfile._id, {
+      nickname: cleanValue,
+      normalizedNickname,
+      ...(cleanPartnerNickname ? { partnerNickname: cleanPartnerNickname } : {}),
+      updatedAt: now,
+    })
+
+    return (await ctx.db.get(existingProfile._id)) as Doc<'profiles'>
+  }
+
+  const profileId = await ctx.db.insert('profiles', {
+    nickname: cleanValue,
+    normalizedNickname,
+    ...(cleanPartnerNickname ? { partnerNickname: cleanPartnerNickname } : {}),
+    createdAt: now,
+    updatedAt: now,
+  })
+
+  return (await ctx.db.get(profileId)) as Doc<'profiles'>
+}
+
+export const getByNickname = query({
+  args: {
+    nickname: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const cleanValue = cleanNickname(args.nickname)
+
+    if (!cleanValue) {
+      return buildCountdownState(ctx, null)
+    }
+
+    const profile = await getProfileByNickname(ctx.db, cleanValue)
+
+    return buildCountdownState(ctx, profile)
+  },
+})
+
+export const saveProfile = mutation({
+  args: {
+    nickname: v.string(),
+    partnerNickname: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const profile = await upsertProfile(
+      ctx,
+      args.nickname,
+      args.partnerNickname,
+    )
+
+    return buildCountdownState(ctx, profile)
+  },
+})
+
+export const createCountdown = mutation({
+  args: {
+    nickname: v.string(),
+    partnerNickname: v.optional(v.string()),
+    initialDays: v.number(),
+  },
+  handler: async (ctx, args) => {
+    if (!Number.isInteger(args.initialDays) || args.initialDays < 0) {
+      throw new Error('La cantidad de dias debe ser un entero mayor o igual a 0.')
+    }
+
+    const profile = await upsertProfile(
+      ctx,
+      args.nickname,
+      args.partnerNickname,
+    )
+    const now = Date.now()
+    const countdownId = await ctx.db.insert('countdowns', {
+      initialDays: args.initialDays,
+      placedAt: now,
+      ownerNickname: profile.nickname,
+      createdAt: now,
+      updatedAt: now,
+    })
+
+    await ctx.db.patch(profile._id, {
+      countdownId,
+      updatedAt: now,
+    })
+
+    const updatedProfile = (await ctx.db.get(profile._id)) as Doc<'profiles'>
+
+    return buildCountdownState(ctx, updatedProfile)
+  },
+})
+
+export const syncWithProfile = mutation({
+  args: {
+    nickname: v.string(),
+    partnerNickname: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const cleanNicknameValue = assertNickname(args.nickname)
+    const cleanPartnerNickname = assertNickname(args.partnerNickname)
+    assertDifferentNicknames(cleanNicknameValue, cleanPartnerNickname)
+
+    const partnerProfile = await getProfileByNickname(
+      ctx.db,
+      cleanPartnerNickname,
+    )
+
+    if (!partnerProfile?.countdownId) {
+      throw new Error('Esa persona aun no tiene un countdown para sincronizar.')
+    }
+
+    const profile = await upsertProfile(
+      ctx,
+      cleanNicknameValue,
+      cleanPartnerNickname,
+    )
+    const now = Date.now()
+    const countdownId = partnerProfile.countdownId as Id<'countdowns'>
+
+    await ctx.db.patch(profile._id, {
+      partnerNickname: partnerProfile.nickname,
+      countdownId,
+      updatedAt: now,
+    })
+
+    const updatedProfile = (await ctx.db.get(profile._id)) as Doc<'profiles'>
+
+    return buildCountdownState(ctx, updatedProfile)
+  },
+})
