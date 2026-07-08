@@ -1,0 +1,135 @@
+:root {
+  /* Color */
+  --color-text: #4f5b66;
+  --color-muted: #6f7b86;
+  --color-text-strong: #111827;
+  --color-bg: #f7f4ee;
+  --color-surface: #ffffff;
+  --color-border: #ddd7cb;
+  --color-track: #e7dfd2;
+  --color-input-bg: #fffaf2;
+  --color-accent: #0f766e;
+  --color-warm-accent: #e05d3f;
+  --color-accent-bg: rgba(15, 118, 110, 0.12);
+  --color-accent-border: rgba(15, 118, 110, 0.45);
+  --color-warm-bg: rgba(224, 93, 63, 0.14);
+  --color-button-text: #ffffff;
+  --color-danger: #b42318;
+  --color-backdrop: rgba(8, 6, 13, 0.55);
+
+  --shadow-card:
+    rgba(17, 24, 39, 0.08) 0 18px 36px, rgba(17, 24, 39, 0.05) 0 4px 12px;
+  --shadow-dialog:
+    rgba(17, 24, 39, 0.24) 0 24px 64px, rgba(17, 24, 39, 0.14) 0 8px 24px;
+
+  /* Typography */
+  --font-family-base: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: ui-serif, Georgia, 'Times New Roman', serif;
+
+  --font-size-2xs: 11px;
+  --font-size-xs: 13px;
+  --font-size-sm: 14px;
+  --font-size-md: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 28px;
+  --font-size-h1: 56px;
+  --font-size-h2: 28px;
+
+  --line-height-base: 1.45;
+
+  /* Countdown display sizes (responsive overrides below) */
+  --font-size-count-days: 72px;
+  --font-size-count-hours: 42px;
+  --font-size-count-minutes: 34px;
+  --font-size-count-seconds: 26px;
+  --font-size-count-colon: 28px;
+  --size-count-min: 48px;
+  --size-count-days-min: 78px;
+  --size-scale-min-height: 86px;
+  --space-scale-gap: var(--space-2);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-4-5: 18px;
+  --space-5: 20px;
+  --space-5-5: 22px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+
+  /* Radius + borders */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-full: 999px;
+  --border-width: 1px;
+  --border-width-focus: 3px;
+
+  /* Sizes */
+  --size-viewport-min: 320px;
+  --size-shell-max: 960px;
+  --size-dialog-max: 420px;
+  --size-intro-max: 560px;
+  --size-summary-max: 640px;
+  --size-pill-min: 32px;
+  --size-input-min: 48px;
+  --size-textarea-min: 84px;
+  --size-track-height: 12px;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --font-size-md: 16px;
+    --font-size-h1: 40px;
+    --font-size-h2: 24px;
+
+    --font-size-count-days: 42px;
+    --font-size-count-hours: 34px;
+    --font-size-count-minutes: 28px;
+    --font-size-count-seconds: 23px;
+    --font-size-count-colon: 22px;
+    --size-count-min: 39px;
+    --size-count-days-min: 62px;
+    --size-scale-min-height: 72px;
+    --space-scale-gap: var(--space-1-5);
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --font-size-count-days: 38px;
+    --font-size-count-hours: 30px;
+    --font-size-count-minutes: 25px;
+    --font-size-count-seconds: 20px;
+    --font-size-count-colon: 20px;
+    --size-count-min: 34px;
+    --size-count-days-min: 56px;
+    --size-scale-min-height: 66px;
+    --space-scale-gap: var(--space-1);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #d1d5db;
+    --color-muted: #9ca3af;
+    --color-text-strong: #f8fafc;
+    --color-bg: #111827;
+    --color-surface: #18212f;
+    --color-border: #334155;
+    --color-track: #2a374a;
+    --color-input-bg: #111827;
+    --color-accent: #2dd4bf;
+    --color-warm-accent: #fb7b57;
+    --color-accent-bg: rgba(45, 212, 191, 0.14);
+    --color-accent-border: rgba(45, 212, 191, 0.5);
+    --color-button-text: #042f2e;
+    --color-danger: #fca5a5;
+  }
+}

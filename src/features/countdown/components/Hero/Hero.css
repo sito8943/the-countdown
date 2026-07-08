@@ -1,0 +1,16 @@
+.countdown-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-6);
+}
+
+.hero-copy {
+  text-align: left;
+}
+
+@media (max-width: 720px) {
+  .countdown-hero {
+    grid-template-columns: 1fr;
+  }
+}

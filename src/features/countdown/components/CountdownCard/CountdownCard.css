@@ -1,0 +1,132 @@
+.countdown-card {
+  padding: var(--space-7);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.profile-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.status-pill {
+  display: inline-flex;
+  min-height: var(--size-pill-min);
+  align-items: center;
+  border: var(--border-width) solid var(--color-accent-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  color: var(--color-text-strong);
+  background: var(--color-accent-bg);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.muted-pill {
+  border-color: var(--color-border);
+  color: var(--color-muted);
+  background: transparent;
+}
+
+.countdown-readout {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  overflow: hidden;
+}
+
+.readout-caption {
+  color: var(--color-text-strong);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.progress-block {
+  display: grid;
+  gap: var(--space-2-5);
+}
+
+.progress-track {
+  height: var(--size-track-height);
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-track);
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent),
+    var(--color-warm-accent)
+  );
+  transition: width 0.35s ease;
+}
+
+.progress-meta,
+.settings-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.progress-meta {
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+.settings-summary {
+  padding-top: var(--space-1);
+  border-top: var(--border-width) solid var(--color-border);
+  text-align: left;
+}
+
+.settings-summary p {
+  max-width: var(--size-summary-max);
+  color: var(--color-text);
+}
+
+.loading-copy {
+  padding-top: var(--space-1);
+  border-top: var(--border-width) solid var(--color-border);
+  color: var(--color-muted);
+  text-align: left;
+}
+
+@media (max-width: 720px) {
+  .countdown-card {
+    padding: var(--space-5-5);
+  }
+
+  .countdown-readout {
+    row-gap: var(--space-1-5);
+  }
+
+  .readout-caption {
+    flex-basis: 100%;
+  }
+
+  .progress-meta,
+  .settings-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .countdown-card {
+    padding: var(--space-4-5);
+  }
+}
