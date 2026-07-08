@@ -77,21 +77,84 @@
   background: transparent;
 }
 
-.days-block {
-  display: grid;
-  justify-items: start;
-  gap: 6px;
+.countdown-readout {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  column-gap: 16px;
+  row-gap: 8px;
+  overflow: hidden;
 }
 
-.days-value {
+.time-scale {
+  display: flex;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 86px;
+  align-items: end;
+  gap: 8px;
+  overflow: visible;
+  padding: 4px 0;
   color: var(--text-h);
+  font-variant-numeric: tabular-nums;
+}
+
+.time-scale.is-loading {
+  color: var(--muted);
+}
+
+.time-part {
+  --time-size: 28px;
+
+  display: grid;
+  flex: 0 0 auto;
+  min-width: 48px;
+  justify-items: center;
+  gap: 4px;
+}
+
+.time-part strong {
   font-family: var(--heading);
-  font-size: 112px;
+  font-size: var(--time-size);
   font-weight: 700;
   line-height: 0.9;
 }
 
-.days-label {
+.time-part small {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.time-days {
+  --time-size: 72px;
+
+  min-width: 78px;
+}
+
+.time-hours {
+  --time-size: 42px;
+}
+
+.time-minutes {
+  --time-size: 34px;
+}
+
+.time-seconds {
+  --time-size: 26px;
+}
+
+.time-colon {
+  color: var(--muted);
+  font-family: var(--heading);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.readout-caption {
   color: var(--text-h);
   font-size: 22px;
   font-weight: 700;
@@ -260,11 +323,45 @@
     padding: 22px;
   }
 
-  .days-value {
-    font-size: 78px;
+  .countdown-readout {
+    row-gap: 6px;
   }
 
-  .progress-meta,
+  .readout-caption {
+    flex-basis: 100%;
+  }
+
+  .time-scale {
+    gap: 5px;
+    min-height: 72px;
+  }
+
+  .time-part {
+    min-width: 39px;
+  }
+
+  .time-days {
+    --time-size: 42px;
+
+    min-width: 62px;
+  }
+
+  .time-hours {
+    --time-size: 34px;
+  }
+
+  .time-minutes {
+    --time-size: 28px;
+  }
+
+  .time-seconds {
+    --time-size: 23px;
+  }
+
+  .time-colon {
+    font-size: 22px;
+  }
+
   .settings-summary {
     align-items: flex-start;
     flex-direction: column;
@@ -276,5 +373,42 @@
 
   .secondary-action {
     width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .countdown-card {
+    padding: 18px;
+  }
+
+  .time-scale {
+    gap: 4px;
+    min-height: 66px;
+  }
+
+  .time-part {
+    min-width: 34px;
+  }
+
+  .time-days {
+    --time-size: 38px;
+
+    min-width: 56px;
+  }
+
+  .time-hours {
+    --time-size: 30px;
+  }
+
+  .time-minutes {
+    --time-size: 25px;
+  }
+
+  .time-seconds {
+    --time-size: 20px;
+  }
+
+  .time-colon {
+    font-size: 20px;
   }
 }
