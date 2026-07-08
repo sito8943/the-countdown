@@ -1,6 +1,9 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { t } from '../../../../lang'
-import { BUTTON_VARIANT, IconButton } from '../../../../shared/components/elements'
+import {
+  BUTTON_VARIANT,
+  IconButton,
+} from '../../../../shared/components/elements'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { TimeScale } from '../TimeScale'
 import './CountdownCard.css'
@@ -19,17 +22,6 @@ export function CountdownCard() {
 
   return (
     <section className="countdown-card" aria-live="polite">
-      <div className="profile-row">
-        <span className="status-pill">
-          {activeProfile?.nickname ?? localProfile?.nickname ?? t.profile.empty}
-        </span>
-        {activeProfile?.partnerNickname ? (
-          <span className="status-pill muted-pill">
-            {t.profile.with(activeProfile.partnerNickname)}
-          </span>
-        ) : null}
-      </div>
-
       <div className="countdown-readout">
         <p className="readout-caption">{t.readout.caption}</p>
         <TimeScale />
@@ -49,6 +41,15 @@ export function CountdownCard() {
                 : t.progress.waitingNickname}
           </span>
         </div>
+      </div>
+
+      <div className="profile-row">
+        <p className="status-pill">
+          {activeProfile?.nickname ?? localProfile?.nickname ?? t.profile.empty}{" "}
+          {activeProfile?.partnerNickname
+            ? t.profile.with(activeProfile.partnerNickname)
+            : null}
+        </p>
       </div>
 
       {countdown ? (

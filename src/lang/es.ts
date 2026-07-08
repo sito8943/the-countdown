@@ -9,7 +9,7 @@ export const es = {
     with: (partner: string) => `con ${partner}`,
   },
   readout: {
-    caption: 'solo falta',
+    caption: 'solo faltan',
     loading: 'Cargando tiempo restante',
     label: (days: number, hours: number, minutes: number, seconds: number) =>
       `${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos restantes`,

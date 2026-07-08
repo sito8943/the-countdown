@@ -118,7 +118,10 @@
 
 @media (max-width: 720px) {
   .countdown-card {
-    padding: var(--space-5-5);
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border: none;
   }
 
   .countdown-readout {
@@ -127,11 +130,5 @@
 
   .readout-caption {
     flex-basis: 100%;
-  }
-}
-
-@media (max-width: 380px) {
-  .countdown-card {
-    padding: var(--space-4-5);
   }
 }
