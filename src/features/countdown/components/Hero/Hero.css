@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.countdown-hero.enter-up {
+  animation-delay: 0.08s;
+}
+
 .hero-copy {
   text-align: left;
 }

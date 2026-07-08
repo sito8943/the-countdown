@@ -16,7 +16,7 @@ export function TopControls() {
   const isDark = theme === 'dark'
 
   return (
-    <div className="top-controls">
+    <div className="top-controls enter-up">
       {countdown ? (
         <Tooltip
           content={t.summary.createdBy(

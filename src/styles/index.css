@@ -136,3 +136,51 @@ h2 {
   outline: var(--border-width-focus) solid var(--color-accent-border);
   outline-offset: 2px;
 }
+
+/* ---- Entrance animations -------------------------------------------------
+   Elements fade in while rising from below with a subtle scale. Shared
+   keyframes; each component sets its own stagger via animation-delay. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    /* Land on `none` (not scale(1)): a retained transform would make the card
+       a containing block for its position:fixed FABs and break them. */
+    transform: none;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.enter-up {
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-up,
+  .setup-dialog,
+  .setup-dialog::backdrop {
+    animation: none !important;
+  }
+}

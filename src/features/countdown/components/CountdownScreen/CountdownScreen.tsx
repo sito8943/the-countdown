@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { SETUP_STEP } from '../../constants'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { CountdownCard } from '../CountdownCard'
+import { CountdownFabs } from '../CountdownFabs'
 import { Hero } from '../Hero'
 import { TopControls } from '../TopControls'
 
@@ -21,6 +22,7 @@ export function CountdownScreen() {
       <TopControls />
       <Hero />
       <CountdownCard />
+      <CountdownFabs />
       {isSetupOpen ? (
         <Suspense fallback={null}>
           <SetupDialog />

@@ -1,0 +1,34 @@
+.fab-stack {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  /* Rise in with the rest of the UI without transforming an ancestor. */
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.24s;
+}
+
+.icon-button.send-fab {
+  width: var(--size-fab);
+  height: var(--size-fab);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-card);
+}
+
+/* Secondary FAB: smaller, sits above the primary send FAB. */
+.icon-button.edit-fab {
+  width: calc(var(--size-fab) * 0.72);
+  height: calc(var(--size-fab) * 0.72);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fab-stack {
+    animation: none;
+  }
+}

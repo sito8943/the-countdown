@@ -1,9 +1,4 @@
-import { faPaperPlane, faPen } from '@fortawesome/free-solid-svg-icons'
 import { t } from '../../../../lang'
-import {
-  BUTTON_VARIANT,
-  IconButton,
-} from '../../../../shared/components/elements'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { TimeScale } from '../TimeScale'
 import './CountdownCard.css'
@@ -17,14 +12,12 @@ export function CountdownCard() {
     progress,
     elapsedDays,
     isCountdownLoading,
-    openMessages,
-    openSendMessage,
   } = useCountdown()
 
   const partnerNickname = activeProfile?.partnerNickname
 
   return (
-    <section className="countdown-card" aria-live="polite">
+    <section className="countdown-card enter-up" aria-live="polite">
       <div className="countdown-readout">
         <TimeScale />
       </div>
@@ -68,23 +61,6 @@ export function CountdownCard() {
           ) : (
             <p className="message-empty">{t.summary.noMessage}</p>
           )}
-
-          <div className="fab-stack">
-            <IconButton
-              className="edit-fab"
-              variant={BUTTON_VARIANT.SECONDARY}
-              icon={faPen}
-              label={t.summary.editMessages}
-              onClick={openMessages}
-            />
-            <IconButton
-              className="send-fab"
-              variant={BUTTON_VARIANT.PRIMARY}
-              icon={faPaperPlane}
-              label={t.summary.sendMessage}
-              onClick={openSendMessage}
-            />
-          </div>
         </div>
       ) : (
         <p className="loading-copy">

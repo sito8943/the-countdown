@@ -7,6 +7,7 @@
   color: var(--color-text);
   background: var(--color-surface);
   box-shadow: var(--shadow-dialog);
+  animation: dialog-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Ghost close button, danger color, top-right corner. */
@@ -27,6 +28,7 @@
 
 .setup-dialog::backdrop {
   background: var(--color-backdrop);
+  animation: backdrop-in 0.4s ease both;
 }
 
 .setup-form {
