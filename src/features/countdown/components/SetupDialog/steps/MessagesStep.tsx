@@ -6,6 +6,7 @@ import {
 } from '../../../../../shared/components/elements'
 import { NICKNAME_MAX_LENGTH } from '../../../../../shared/constants'
 import {
+  DAYS_INPUT_ID,
   MESSAGE_EYEBROW_INPUT_ID,
   MESSAGE_MAX_LENGTH,
   MESSAGE_TITLE_INPUT_ID,
@@ -20,6 +21,8 @@ export function MessagesStep() {
     onNicknameChange,
     partnerInput,
     onPartnerChange,
+    daysInput,
+    onDaysChange,
     eyebrowInput,
     onEyebrowChange,
     titleInput,
@@ -56,6 +59,17 @@ export function MessagesStep() {
         placeholder={t.setup.messages.partnerLabel}
         value={partnerInput}
         onChange={(event) => onPartnerChange(event.target.value)}
+      />
+
+      <label htmlFor={DAYS_INPUT_ID}>{t.setup.messages.durationLabel}</label>
+      <TextInput
+        id={DAYS_INPUT_ID}
+        type="number"
+        inputMode="numeric"
+        min="0"
+        step="1"
+        value={daysInput}
+        onChange={(event) => onDaysChange(event.target.value)}
       />
 
       <label htmlFor={MESSAGE_EYEBROW_INPUT_ID}>

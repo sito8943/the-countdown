@@ -76,10 +76,19 @@ export const es = {
       title: 'Editar mensajes',
       nicknameLabel: 'Tu nickname',
       partnerLabel: 'Nickname de tu pareja',
+      durationLabel: 'Dias restantes',
       eyebrowLabel: 'Encabezado',
       titleLabel: 'Titulo',
       cancel: 'Cancelar',
       submit: 'Guardar',
+    },
+    confirmDuration: {
+      eyebrow: 'Duracion',
+      title: 'Reiniciar el progreso?',
+      description:
+        'Cambiaste la duracion. Quieres usar hoy como dia inicial y reiniciar el progreso a 0%?',
+      keep: 'No, mantener',
+      reset: 'Si, reiniciar',
     },
     sendMessage: {
       eyebrow: 'Para tu persona',

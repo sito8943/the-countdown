@@ -71,6 +71,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   )
   const [pendingCountdownState, setPendingCountdownState] =
     useState<CountdownState | null>(null)
+  const [pendingDays, setPendingDays] = useState(0)
   const [now, setNow] = useState(() => Date.now())
 
   const viewer = useQuery(
@@ -82,6 +83,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
   const syncWithProfile = useMutation(api.countdowns.syncWithProfile)
   const updateMessages = useMutation(api.countdowns.updateMessages)
   const updateProfile = useMutation(api.countdowns.updateProfile)
+  const updateDuration = useMutation(api.countdowns.updateDuration)
   const sendMessage = useMutation(api.countdowns.sendMessage)
 
   const matchingCachedState =
@@ -380,6 +382,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     setPartnerInput(
       activeProfile?.partnerNickname ?? localProfile?.partnerNickname ?? '',
     )
+    setDaysInput(String(getRemainingDays(countdown) ?? countdown.initialDays))
     setEyebrowInput(countdown.eyebrow ?? t.defaults.eyebrow)
     setTitleInput(countdown.title ?? t.defaults.title)
     setSetupStep(SETUP_STEP.MESSAGES)
@@ -472,6 +475,13 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
       }
     }
 
+    const parsedDays = Number(daysInput)
+
+    if (!Number.isInteger(parsedDays) || parsedDays < 0) {
+      setFormError(t.errors.invalidDays)
+      return
+    }
+
     try {
       setIsSubmitting(true)
       // Save eyebrow/title under the current nickname before any rename.
@@ -497,9 +507,51 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
       setCachedCountdownState(nextState)
       storageService.saveLocalProfile(nextProfile)
       setLocalProfile(nextProfile)
+
+      // Duration change (in remaining days) needs the reset-progress
+      // confirmation first.
+      const currentRemaining = getRemainingDays(countdown)
+
+      if (
+        countdown &&
+        currentRemaining !== null &&
+        parsedDays !== currentRemaining
+      ) {
+        setPendingDays(parsedDays)
+        setSetupStep(SETUP_STEP.CONFIRM_DURATION)
+        return
+      }
+
       setSetupStep(SETUP_STEP.IDLE)
     } catch (error) {
       setFormError(resolveErrorMessage(error, t.errors.saveMessages))
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  async function confirmDuration(resetProgress: boolean) {
+    setFormError('')
+
+    if (!localProfile?.nickname) {
+      setSetupStep(SETUP_STEP.NICKNAME)
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+      const nextState = (await updateDuration({
+        nickname: localProfile.nickname,
+        remainingDays: pendingDays,
+        resetProgress,
+      })) as CountdownState
+
+      setPendingCountdownState(nextState)
+      storageService.saveCountdownCache(nextState)
+      setCachedCountdownState(nextState)
+      setSetupStep(SETUP_STEP.IDLE)
+    } catch (error) {
+      setFormError(resolveErrorMessage(error, t.errors.createCountdown))
     } finally {
       setIsSubmitting(false)
     }
@@ -588,6 +640,7 @@ export function CountdownProvider({ children }: { children: ReactNode }) {
     submitSync,
     submitDays,
     submitMessages,
+    confirmDuration,
     openMessages,
     openSendMessage,
     submitSendMessage,

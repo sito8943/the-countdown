@@ -6,6 +6,7 @@ export const SETUP_STEP = {
   DAYS: 'days',
   MESSAGES: 'messages',
   SEND_MESSAGE: 'send-message',
+  CONFIRM_DURATION: 'confirm-duration',
 } as const
 
 export type SetupStep = (typeof SETUP_STEP)[keyof typeof SETUP_STEP]

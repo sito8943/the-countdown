@@ -204,6 +204,61 @@ export const updateMessages = mutation({
   },
 })
 
+const DAY_IN_MS = 24 * 60 * 60 * 1000
+
+// Sets how many days remain from now. resetProgress true makes today the start
+// (progress restarts at 0%); false keeps the elapsed whole days so the progress
+// bar continues, while remaining still lands exactly on remainingDays.
+export const updateDuration = mutation({
+  args: {
+    nickname: v.string(),
+    remainingDays: v.number(),
+    resetProgress: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    if (!Number.isInteger(args.remainingDays) || args.remainingDays < 0) {
+      throw new Error(
+        'La cantidad de dias debe ser un entero mayor o igual a 0.',
+      )
+    }
+
+    const profile = await getProfileByNickname(ctx.db, args.nickname)
+
+    if (!profile?.countdownId) {
+      throw new Error('No hay countdown para editar.')
+    }
+
+    const countdown = await ctx.db.get(profile.countdownId)
+
+    if (!countdown) {
+      throw new Error('No hay countdown para editar.')
+    }
+
+    const now = Date.now()
+
+    if (args.resetProgress) {
+      await ctx.db.patch(profile.countdownId, {
+        initialDays: args.remainingDays,
+        placedAt: now,
+        updatedAt: now,
+      })
+    } else {
+      const elapsedDays = Math.floor(
+        Math.max(0, now - countdown.placedAt) / DAY_IN_MS,
+      )
+      await ctx.db.patch(profile.countdownId, {
+        initialDays: args.remainingDays + elapsedDays,
+        // Snap the start to a whole-day boundary so both the elapsed count and
+        // the remaining count stay exact integers.
+        placedAt: now - elapsedDays * DAY_IN_MS,
+        updatedAt: now,
+      })
+    }
+
+    return buildCountdownState(ctx, profile)
+  },
+})
+
 // Renames the current profile and/or updates its partner pointer. Keeps the
 // same countdown link and migrates the sender's own message key on rename.
 export const updateProfile = mutation({

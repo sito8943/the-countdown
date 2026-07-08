@@ -8,6 +8,7 @@ import {
 import { SETUP_STEP } from '../../constants'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { DaysStep } from './steps/DaysStep'
+import { DurationConfirmStep } from './steps/DurationConfirmStep'
 import { MessagesStep } from './steps/MessagesStep'
 import { NicknameStep } from './steps/NicknameStep'
 import { PartnerStep } from './steps/PartnerStep'
@@ -30,6 +31,8 @@ function renderStep(setupStep: SetupStep) {
       return <MessagesStep />
     case SETUP_STEP.SEND_MESSAGE:
       return <SendMessageStep />
+    case SETUP_STEP.CONFIRM_DURATION:
+      return <DurationConfirmStep />
     default:
       return null
   }
@@ -39,7 +42,9 @@ export function SetupDialog() {
   const { setupStep, closeDialog } = useCountdown()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const isDismissible =
-    setupStep === SETUP_STEP.MESSAGES || setupStep === SETUP_STEP.SEND_MESSAGE
+    setupStep === SETUP_STEP.MESSAGES ||
+    setupStep === SETUP_STEP.SEND_MESSAGE ||
+    setupStep === SETUP_STEP.CONFIRM_DURATION
 
   // This component is mounted lazily only while a setup step is active
   // (see CountdownScreen), so open the modal once on mount. Closing happens
@@ -57,10 +62,7 @@ export function SetupDialog() {
       ref={dialogRef}
       className="setup-dialog"
       onCancel={(event) => {
-        if (
-          setupStep === SETUP_STEP.MESSAGES ||
-          setupStep === SETUP_STEP.SEND_MESSAGE
-        ) {
+        if (isDismissible) {
           closeDialog()
           return
         }

@@ -64,6 +64,7 @@ export type CountdownContextValue = {
   submitSync: (event: FormEvent<HTMLFormElement>) => void
   submitDays: (event: FormEvent<HTMLFormElement>) => void
   submitMessages: (event: FormEvent<HTMLFormElement>) => void
+  confirmDuration: (resetProgress: boolean) => void
   openMessages: () => void
   openSendMessage: () => void
   submitSendMessage: (event: FormEvent<HTMLFormElement>) => void
