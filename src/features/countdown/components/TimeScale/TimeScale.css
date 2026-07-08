@@ -31,6 +31,10 @@
   line-height: 0.9;
 }
 
+.time-part number-flow-react {
+  display: block;
+}
+
 .time-part small {
   color: var(--color-muted);
   font-size: var(--font-size-2xs);
