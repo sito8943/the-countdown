@@ -71,6 +71,7 @@
   --sito-ui-space-5: var(--space-5);
   --sito-ui-size-icon-button: var(--size-input-min);
   --sito-ui-size-button-spinner: 1em;
+  --sito-ui-dialog-max-width: var(--size-dialog-max);
   --sito-ui-radius-pill: var(--radius-sm);
   --sito-ui-radius-round: var(--radius-full);
   --sito-ui-radius-dialog: var(--radius-md);

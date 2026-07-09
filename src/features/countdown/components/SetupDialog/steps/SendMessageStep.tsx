@@ -1,10 +1,8 @@
 import { t } from '../../../../../lang'
+import { Textarea } from '../../../../../shared/components/elements'
+import { DialogActions } from '../../../../../shared/components/patterns'
 import {
-  Button,
-  BUTTON_VARIANT,
-  Textarea,
-} from '../../../../../shared/components/elements'
-import {
+  COPY_CURRENT_URL_ACTION_ID,
   MESSAGE_MAX_LENGTH,
   PARTNER_MESSAGE_INPUT_ID,
 } from '../../../constants'
@@ -48,28 +46,23 @@ export function SendMessageStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <div className="dialog-actions">
-        <Button
-          type="button"
-          variant={BUTTON_VARIANT.SECONDARY}
-          onClick={closeDialog}
-          disabled={isSubmitting}
-        >
-          {t.setup.sendMessage.cancel}
-        </Button>
-        <Button
-          type="button"
-          variant={BUTTON_VARIANT.SECONDARY}
-          onClick={copyCurrentUrl}
-        >
-          {messageCopied
-            ? t.setup.sendMessage.copied
-            : t.setup.sendMessage.copy}
-        </Button>
-        <Button type="submit" loading={isSubmitting}>
-          {t.setup.sendMessage.submit}
-        </Button>
-      </div>
+      <DialogActions
+        primaryText={t.setup.sendMessage.submit}
+        cancelText={t.setup.sendMessage.cancel}
+        onCancel={closeDialog}
+        isLoading={isSubmitting}
+        disabled={isSubmitting}
+        extraActions={[
+          {
+            id: COPY_CURRENT_URL_ACTION_ID,
+            type: 'button',
+            onClick: copyCurrentUrl,
+            children: messageCopied
+              ? t.setup.sendMessage.copied
+              : t.setup.sendMessage.copy,
+          },
+        ]}
+      />
     </form>
   )
 }

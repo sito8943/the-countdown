@@ -1,9 +1,6 @@
 import { t } from '../../../../../lang'
-import {
-  Button,
-  BUTTON_VARIANT,
-  TextInput,
-} from '../../../../../shared/components/elements'
+import { TextInput } from '../../../../../shared/components/elements'
+import { DialogActions } from '../../../../../shared/components/patterns'
 import { NICKNAME_MAX_LENGTH } from '../../../../../shared/constants'
 import {
   DAYS_INPUT_ID,
@@ -96,19 +93,13 @@ export function MessagesStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <div className="dialog-actions">
-        <Button
-          type="button"
-          variant={BUTTON_VARIANT.SECONDARY}
-          onClick={closeDialog}
-          disabled={isSubmitting}
-        >
-          {t.setup.messages.cancel}
-        </Button>
-        <Button type="submit" loading={isSubmitting}>
-          {t.setup.messages.submit}
-        </Button>
-      </div>
+      <DialogActions
+        primaryText={t.setup.messages.submit}
+        cancelText={t.setup.messages.cancel}
+        onCancel={closeDialog}
+        isLoading={isSubmitting}
+        disabled={isSubmitting}
+      />
     </form>
   )
 }

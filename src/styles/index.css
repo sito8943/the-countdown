@@ -120,6 +120,30 @@ h2 {
   outline-offset: 2px;
 }
 
+.dialog-actions {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--space-2-5);
+}
+
+.dialog-actions .primary-action,
+.dialog-actions .secondary-action {
+  width: 100%;
+}
+
+.dialog-actions .dialog-action-cancel {
+  order: 1;
+}
+
+.dialog-actions .dialog-action-extra {
+  order: 2;
+}
+
+.dialog-actions .dialog-action-primary {
+  order: 3;
+}
+
 .field {
   width: 100%;
   min-height: var(--size-input-min);
@@ -186,7 +210,14 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .enter-up,
   .setup-dialog,
-  .setup-dialog::backdrop {
+  .setup-dialog-backdrop {
     animation: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .dialog-actions {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
   }
 }
