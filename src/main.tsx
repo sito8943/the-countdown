@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import { createRoot } from 'react-dom/client'
+import '@sito/ui/styles.css'
 import './styles/index.css'
 import { App } from './app'
 

@@ -1,11 +1,6 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useRef } from 'react'
 import { t } from '../../../../lang'
-import {
-  BUTTON_VARIANT,
-  IconButton,
-} from '../../../../shared/components/elements'
-import { SETUP_STEP } from '../../constants'
+import { Dialog } from '../../../../shared/components/patterns'
+import { SETUP_STEP, type SetupStep } from '../../constants'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { DaysStep } from './steps/DaysStep'
 import { DurationConfirmStep } from './steps/DurationConfirmStep'
@@ -14,7 +9,6 @@ import { NicknameStep } from './steps/NicknameStep'
 import { PartnerStep } from './steps/PartnerStep'
 import { SendMessageStep } from './steps/SendMessageStep'
 import { SyncStep } from './steps/SyncStep'
-import type { SetupStep } from '../../constants'
 import './SetupDialog.css'
 
 function renderStep(setupStep: SetupStep) {
@@ -38,50 +32,48 @@ function renderStep(setupStep: SetupStep) {
   }
 }
 
+function getSetupDialogLabel(setupStep: SetupStep) {
+  switch (setupStep) {
+    case SETUP_STEP.NICKNAME:
+      return t.setup.nickname.title
+    case SETUP_STEP.PARTNER:
+      return t.setup.partner.title
+    case SETUP_STEP.SYNC:
+      return t.setup.sync.title
+    case SETUP_STEP.DAYS:
+      return t.setup.days.title
+    case SETUP_STEP.MESSAGES:
+      return t.setup.messages.title
+    case SETUP_STEP.SEND_MESSAGE:
+      return t.setup.sendMessage.title
+    case SETUP_STEP.CONFIRM_DURATION:
+      return t.setup.confirmDuration.title
+    default:
+      return t.loading.completeSteps
+  }
+}
+
 export function SetupDialog() {
   const { setupStep, closeDialog } = useCountdown()
-  const dialogRef = useRef<HTMLDialogElement>(null)
   const isDismissible =
     setupStep === SETUP_STEP.MESSAGES ||
     setupStep === SETUP_STEP.SEND_MESSAGE ||
     setupStep === SETUP_STEP.CONFIRM_DURATION
 
-  // This component is mounted lazily only while a setup step is active
-  // (see CountdownScreen), so open the modal once on mount. Closing happens
-  // by unmounting when the step returns to idle.
-  useEffect(() => {
-    const dialog = dialogRef.current
-
-    if (dialog && !dialog.open) {
-      dialog.showModal()
-    }
-  }, [])
-
   return (
-    <dialog
-      ref={dialogRef}
+    <Dialog
+      open={setupStep !== SETUP_STEP.IDLE}
+      ariaLabel={getSetupDialogLabel(setupStep)}
+      onClose={closeDialog}
+      initialFocus="first-input"
+      closeOnEscape={isDismissible}
+      closeOnBackdropClick={false}
+      showCloseButton={isDismissible}
+      closeLabel={t.setup.close}
+      containerClassName="setup-dialog-backdrop"
       className="setup-dialog"
-      onCancel={(event) => {
-        if (isDismissible) {
-          closeDialog()
-          return
-        }
-
-        if (setupStep !== SETUP_STEP.IDLE) {
-          event.preventDefault()
-        }
-      }}
     >
-      {isDismissible ? (
-        <IconButton
-          className="dialog-close"
-          variant={BUTTON_VARIANT.SECONDARY}
-          icon={faXmark}
-          label={t.setup.close}
-          onClick={closeDialog}
-        />
-      ) : null}
       {renderStep(setupStep)}
-    </dialog>
+    </Dialog>
   )
 }

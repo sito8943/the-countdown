@@ -1,8 +1,5 @@
 import { t } from '../../../../../lang'
-import {
-  Button,
-  BUTTON_VARIANT,
-} from '../../../../../shared/components/elements'
+import { DialogActions } from '../../../../../shared/components/patterns'
 import { useCountdown } from '../../../providers/CountdownProvider'
 
 export function DurationConfirmStep() {
@@ -18,23 +15,15 @@ export function DurationConfirmStep() {
 
       {formError ? <p className="field-error">{formError}</p> : null}
 
-      <div className="dialog-actions">
-        <Button
-          type="button"
-          variant={BUTTON_VARIANT.SECONDARY}
-          onClick={() => confirmDuration(false)}
-          disabled={isSubmitting}
-        >
-          {t.setup.confirmDuration.keep}
-        </Button>
-        <Button
-          type="button"
-          onClick={() => confirmDuration(true)}
-          loading={isSubmitting}
-        >
-          {t.setup.confirmDuration.reset}
-        </Button>
-      </div>
+      <DialogActions
+        primaryType="button"
+        primaryText={t.setup.confirmDuration.reset}
+        cancelText={t.setup.confirmDuration.keep}
+        onPrimaryClick={() => confirmDuration(true)}
+        onCancel={() => confirmDuration(false)}
+        isLoading={isSubmitting}
+        disabled={isSubmitting}
+      />
     </div>
   )
 }
