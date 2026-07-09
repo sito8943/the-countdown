@@ -33,6 +33,63 @@
     rgba(80, 36, 60, 0.28) 0 1.5rem 4rem,
     rgba(232, 93, 143, 0.16) 0 0.5rem 1.5rem;
 
+  /* @sito/ui token bridge */
+  --sito-ui-color-text: var(--color-text-strong);
+  --sito-ui-color-surface: var(--color-surface);
+  --sito-ui-color-border: var(--color-border);
+  --sito-ui-color-default-text: var(--color-text-strong);
+  --sito-ui-color-default-light: var(--color-accent-bg);
+  --sito-ui-color-default-default: var(--color-text-strong);
+  --sito-ui-color-default-hover: var(--color-accent-border);
+  --sito-ui-color-primary-text: var(--color-button-text);
+  --sito-ui-color-primary-light: var(--color-accent-bg);
+  --sito-ui-color-primary-default: var(--color-accent);
+  --sito-ui-color-primary-hover: var(--color-warm-accent);
+  --sito-ui-color-secondary-text: var(--color-text-strong);
+  --sito-ui-color-secondary-light: var(--color-accent-bg);
+  --sito-ui-color-secondary-default: var(--color-text-strong);
+  --sito-ui-color-secondary-hover: var(--color-accent-border);
+  --sito-ui-color-error-text: var(--color-button-text);
+  --sito-ui-color-error-light: var(--color-accent-bg);
+  --sito-ui-color-error-default: var(--color-danger);
+  --sito-ui-color-error-hover: var(--color-danger);
+  --sito-ui-color-warning-text: var(--color-text-strong);
+  --sito-ui-color-warning-light: var(--color-warm-bg);
+  --sito-ui-color-warning-default: var(--color-warm-accent);
+  --sito-ui-color-warning-hover: var(--color-warm-accent);
+  --sito-ui-color-success-text: var(--color-button-text);
+  --sito-ui-color-success-light: var(--color-accent-bg);
+  --sito-ui-color-success-default: var(--color-accent);
+  --sito-ui-color-success-hover: var(--color-warm-accent);
+  --sito-ui-color-info-text: var(--color-button-text);
+  --sito-ui-color-info-light: var(--color-accent-bg);
+  --sito-ui-color-info-default: var(--color-accent);
+  --sito-ui-color-info-hover: var(--color-warm-accent);
+  --sito-ui-space-0: 0;
+  --sito-ui-space-2: var(--space-2);
+  --sito-ui-space-4: var(--space-4);
+  --sito-ui-space-5: var(--space-5);
+  --sito-ui-size-icon-button: var(--size-input-min);
+  --sito-ui-radius-pill: var(--radius-sm);
+  --sito-ui-radius-round: var(--radius-full);
+  --sito-ui-radius-dialog: var(--radius-md);
+  --sito-ui-border-width-thin: var(--border-width);
+  --sito-ui-font-weight-semibold: 700;
+  --sito-ui-font-size-button: var(--font-size-md);
+  --sito-ui-font-size-icon-button: var(--font-size-md);
+  --sito-ui-font-size-dialog-title: var(--font-size-h2);
+  --sito-ui-line-height-button: var(--line-height-base);
+  --sito-ui-line-height-icon-button: var(--line-height-base);
+  --sito-ui-line-height-dialog-title: 1.1;
+  --sito-ui-motion-duration-normal: 0.16s;
+  --sito-ui-motion-easing-standard: ease;
+  --sito-ui-shadow-dialog: var(--shadow-dialog);
+  --sito-ui-z-index-dialog: 50;
+  --sito-ui-button-disabled-opacity: 0.65;
+  --sito-ui-button-active-scale: 0.97;
+  --sito-ui-dialog-backdrop-background: var(--color-backdrop);
+  --sito-ui-dialog-backdrop-filter: none;
+
   /* Typography */
   --font-family-base: Inter, system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-family-heading: ui-serif, Georgia, 'Times New Roman', serif;

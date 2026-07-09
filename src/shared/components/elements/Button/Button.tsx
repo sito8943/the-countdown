@@ -1,5 +1,11 @@
+import { Button as SitoButton } from '@sito/ui'
 import { classNames } from '../../../utils'
-import { BUTTON_VARIANT, BUTTON_VARIANT_CLASS } from './constants'
+import {
+  BUTTON_UI_COLOR,
+  BUTTON_UI_VARIANT,
+  BUTTON_VARIANT,
+  BUTTON_VARIANT_CLASS,
+} from './constants'
 import type { ButtonProps } from './types'
 
 /**
@@ -23,15 +29,17 @@ export function Button({
   )
 
   return (
-    <button
+    <SitoButton
+      {...rest}
       type={type}
+      variant={BUTTON_UI_VARIANT[variant]}
+      color={BUTTON_UI_COLOR[variant]}
       className={classes}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
-      {...rest}
     >
       {loading ? <span className="button-spinner" aria-hidden="true" /> : null}
       {children}
-    </button>
+    </SitoButton>
   )
 }
