@@ -22,10 +22,7 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = classNames(
-    BUTTON_VARIANT_CLASS[variant],
-    className,
-  )
+  const classes = classNames(BUTTON_VARIANT_CLASS[variant], className)
 
   return (
     <SitoButton

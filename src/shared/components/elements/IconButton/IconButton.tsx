@@ -1,10 +1,6 @@
 import { IconButton as SitoIconButton } from '@sito/ui'
 import { classNames } from '../../../utils'
-import {
-  BUTTON_UI_COLOR,
-  BUTTON_UI_VARIANT,
-  BUTTON_VARIANT,
-} from '../Button'
+import { BUTTON_UI_COLOR, BUTTON_UI_VARIANT, BUTTON_VARIANT } from '../Button'
 import { Icon } from '../Icon'
 import type { IconButtonProps } from './types'
 import './IconButton.css'
