@@ -24,7 +24,6 @@ export function Button({
 }: ButtonProps) {
   const classes = classNames(
     BUTTON_VARIANT_CLASS[variant],
-    loading ? 'is-loading' : undefined,
     className,
   )
 
@@ -35,10 +34,9 @@ export function Button({
       variant={BUTTON_UI_VARIANT[variant]}
       color={BUTTON_UI_COLOR[variant]}
       className={classes}
-      disabled={disabled || loading}
-      aria-busy={loading || undefined}
+      disabled={disabled}
+      loading={loading}
     >
-      {loading ? <span className="button-spinner" aria-hidden="true" /> : null}
       {children}
     </SitoButton>
   )

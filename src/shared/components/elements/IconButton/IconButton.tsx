@@ -31,9 +31,9 @@ export function IconButton({
       color={BUTTON_UI_COLOR[variant]}
       className={classes}
       aria-label={label}
-      disabled={disabled || loading}
-      aria-busy={loading || undefined}
-      icon={loading ? null : <Icon icon={icon} fixedWidth />}
+      disabled={disabled}
+      loading={loading}
+      icon={<Icon icon={icon} fixedWidth />}
     />
   )
 }
