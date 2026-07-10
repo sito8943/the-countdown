@@ -18,7 +18,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.3.0",
     "@fortawesome/react-fontawesome": "^3.4.0",
     "@number-flow/react": "^0.6.1",
-    "@sito/ui": "0.2.0",
+    "@sito/ui": "0.3.0",
     "convex": "^1.42.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"

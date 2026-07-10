@@ -1,0 +1,1 @@
+export const DIALOG_EXIT_ANIMATION_MS = 220
