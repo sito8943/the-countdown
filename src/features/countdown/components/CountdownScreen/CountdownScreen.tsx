@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { SETUP_STEP } from '../../constants'
 import { useCountdown } from '../../providers/CountdownProvider'
 import { CountdownCard } from '../CountdownCard'
@@ -16,6 +16,12 @@ const SetupDialog = lazy(() =>
 export function CountdownScreen() {
   const { setupStep } = useCountdown()
   const isSetupOpen = setupStep !== SETUP_STEP.IDLE
+  const [shouldRenderSetupDialog, setShouldRenderSetupDialog] =
+    useState(isSetupOpen)
+
+  if (isSetupOpen && !shouldRenderSetupDialog) {
+    setShouldRenderSetupDialog(true)
+  }
 
   return (
     <>
@@ -23,9 +29,11 @@ export function CountdownScreen() {
       <Hero />
       <CountdownCard />
       <CountdownFabs />
-      {isSetupOpen ? (
+      {shouldRenderSetupDialog ? (
         <Suspense fallback={null}>
-          <SetupDialog />
+          <SetupDialog
+            onExitComplete={() => setShouldRenderSetupDialog(false)}
+          />
         </Suspense>
       ) : null}
     </>

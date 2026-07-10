@@ -1,6 +1,11 @@
 import { IconButton as SitoIconButton } from '@sito/ui'
 import { classNames } from '../../../utils'
-import { BUTTON_UI_COLOR, BUTTON_UI_VARIANT, BUTTON_VARIANT } from '../Button'
+import {
+  BUTTON_UI_COLOR,
+  BUTTON_UI_VARIANT,
+  BUTTON_VARIANT,
+  BUTTON_VARIANT_CLASS,
+} from '../Button'
 import { Icon } from '../Icon'
 import type { IconButtonProps } from './types'
 import './IconButton.css'
@@ -18,7 +23,11 @@ export function IconButton({
   disabled,
   ...rest
 }: IconButtonProps) {
-  const classes = classNames('icon-button', className)
+  const classes = classNames(
+    'icon-button',
+    BUTTON_VARIANT_CLASS[variant],
+    className,
+  )
 
   return (
     <SitoIconButton

@@ -203,14 +203,51 @@ h2 {
   }
 }
 
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+}
+
+@keyframes backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.app-dialog.sito-ui-dialog--open {
+  animation: dialog-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dialog-backdrop.sito-ui-dialog-backdrop--open {
+  animation: backdrop-in 0.4s ease both;
+}
+
+.app-dialog.sito-ui-dialog--closing {
+  animation: dialog-out 0.22s ease both;
+}
+
+.app-dialog-backdrop.sito-ui-dialog-backdrop--closing {
+  pointer-events: none;
+  animation: backdrop-out 0.22s ease both;
+}
+
 .enter-up {
   animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .enter-up,
-  .setup-dialog,
-  .setup-dialog-backdrop {
+  .app-dialog,
+  .app-dialog-backdrop,
+  .enter-up {
     animation: none !important;
   }
 }

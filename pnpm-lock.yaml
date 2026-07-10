@@ -20,8 +20,8 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sito/ui':
-        specifier: 0.2.0
-        version: 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: 0.3.0
+        version: 0.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       convex:
         specifier: ^1.42.1
         version: 1.42.1(react@19.2.7)
@@ -1731,10 +1731,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sito/ui@0.2.0':
+  '@sito/ui@0.3.0':
     resolution:
       {
-        integrity: sha512-m5j44gSecHIduIY1wuSt14N6200ou5H+nYMt0T9wC/TnFjwdwcquQUogQPokiGYPGIxs8mxlb9b1mqsiSTTUyA==,
+        integrity: sha512-1beOqxw5q0yX26HF3DflWB5l93Scf+5oTSx4W+CT59qx4ZounaoWM5IRJT6+4s87rDHdxoPgnjqKE8SZZ/UAHQ==,
       }
     engines: { node: ^20.19.0 || ^22.13.0 || >=24 }
     peerDependencies:
@@ -5144,7 +5144,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@sito/ui@0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@sito/ui@0.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)

@@ -1,11 +1,6 @@
 .setup-dialog {
   position: relative;
   padding: 0;
-  animation: dialog-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.setup-dialog-backdrop {
-  animation: backdrop-in 0.4s ease both;
 }
 
 .setup-dialog > .sito-ui-dialog__header {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { t } from '../../../../lang'
 import { Dialog } from '../../../../shared/components/patterns'
 import { SETUP_STEP, type SetupStep } from '../../constants'
@@ -9,6 +10,7 @@ import { NicknameStep } from './steps/NicknameStep'
 import { PartnerStep } from './steps/PartnerStep'
 import { SendMessageStep } from './steps/SendMessageStep'
 import { SyncStep } from './steps/SyncStep'
+import type { SetupDialogProps } from './types'
 import './SetupDialog.css'
 
 function renderStep(setupStep: SetupStep) {
@@ -53,18 +55,26 @@ function getSetupDialogLabel(setupStep: SetupStep) {
   }
 }
 
-export function SetupDialog() {
+export function SetupDialog({ onExitComplete }: SetupDialogProps) {
   const { setupStep, closeDialog } = useCountdown()
+  const isOpen = setupStep !== SETUP_STEP.IDLE
+  const [visibleSetupStep, setVisibleSetupStep] = useState(setupStep)
+
+  if (isOpen && visibleSetupStep !== setupStep) {
+    setVisibleSetupStep(setupStep)
+  }
+
   const isDismissible =
-    setupStep === SETUP_STEP.MESSAGES ||
-    setupStep === SETUP_STEP.SEND_MESSAGE ||
-    setupStep === SETUP_STEP.CONFIRM_DURATION
+    visibleSetupStep === SETUP_STEP.MESSAGES ||
+    visibleSetupStep === SETUP_STEP.SEND_MESSAGE ||
+    visibleSetupStep === SETUP_STEP.CONFIRM_DURATION
 
   return (
     <Dialog
-      open={setupStep !== SETUP_STEP.IDLE}
-      ariaLabel={getSetupDialogLabel(setupStep)}
+      open={isOpen}
+      ariaLabel={getSetupDialogLabel(visibleSetupStep)}
       onClose={closeDialog}
+      onExitComplete={onExitComplete}
       initialFocus="first-input"
       closeOnEscape={isDismissible}
       closeOnBackdropClick={false}
@@ -73,7 +83,7 @@ export function SetupDialog() {
       containerClassName="setup-dialog-backdrop"
       className="setup-dialog"
     >
-      {renderStep(setupStep)}
+      {renderStep(visibleSetupStep)}
     </Dialog>
   )
 }
