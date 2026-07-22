@@ -1,4 +1,4 @@
-import NumberFlow from '@number-flow/react'
+import NumberFlow, { NumberFlowGroup } from '@number-flow/react'
 import { useCountdown } from '../../providers/CountdownProvider'
 import './TimeScale.css'
 
@@ -25,64 +25,62 @@ export function TimeScale() {
       className={`time-scale${remainingTime ? '' : ' is-loading'}`}
       aria-label={timeReadoutLabel}
     >
-      <span className="time-part time-days">
-        {remainingTime ? (
-          <strong>
+      <NumberFlowGroup>
+        <span className="time-part time-days">
+          {remainingTime ? (
             <NumberFlow
+              className="time-number"
               format={timeUnitFormat}
               trend={-1}
               value={remainingTime.days}
             />
-          </strong>
-        ) : (
-          <small>dd</small>
-        )}
-      </span>
-      <span className="time-colon">:</span>
-      <span className="time-part time-hours">
-        {remainingTime ? (
-          <strong>
+          ) : (
+            <small>dd</small>
+          )}
+        </span>
+        <span className="time-colon">:</span>
+        <span className="time-part time-hours">
+          {remainingTime ? (
             <NumberFlow
+              className="time-number"
               digits={hourDigits}
               format={timeUnitFormat}
               trend={-1}
               value={remainingTime.hours}
             />
-          </strong>
-        ) : (
-          <small>hh</small>
-        )}
-      </span>
-      <span className="time-colon">:</span>
-      <span className="time-part time-minutes">
-        {remainingTime ? (
-          <strong>
+          ) : (
+            <small>hh</small>
+          )}
+        </span>
+        <span className="time-colon">:</span>
+        <span className="time-part time-minutes">
+          {remainingTime ? (
             <NumberFlow
+              className="time-number"
               digits={minuteSecondDigits}
               format={timeUnitFormat}
               trend={-1}
               value={remainingTime.minutes}
             />
-          </strong>
-        ) : (
-          <small>mm</small>
-        )}
-      </span>
-      <span className="time-colon">:</span>
-      <span className="time-part time-seconds">
-        {remainingTime ? (
-          <strong>
+          ) : (
+            <small>mm</small>
+          )}
+        </span>
+        <span className="time-colon">:</span>
+        <span className="time-part time-seconds">
+          {remainingTime ? (
             <NumberFlow
+              className="time-number"
               digits={minuteSecondDigits}
               format={timeUnitFormat}
               trend={-1}
               value={remainingTime.seconds}
             />
-          </strong>
-        ) : (
-          <small>ss</small>
-        )}
-      </span>
+          ) : (
+            <small>ss</small>
+          )}
+        </span>
+      </NumberFlowGroup>
     </div>
   )
 }

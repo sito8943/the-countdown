@@ -2,7 +2,7 @@
   display: flex;
   max-width: 100%;
   min-width: 0;
-  align-items: end;
+  align-items: baseline;
   gap: var(--space-scale-gap);
   overflow: visible;
   padding: var(--space-1) 0;
@@ -24,15 +24,12 @@
   gap: var(--space-1);
 }
 
-.time-part strong {
+.time-number {
+  display: block;
   font-family: var(--font-family-heading);
   font-size: var(--time-size);
   font-weight: 700;
   line-height: 0.9;
-}
-
-.time-part number-flow-react {
-  display: block;
 }
 
 .time-part small {
